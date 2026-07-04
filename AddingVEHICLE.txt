@@ -1,6 +1,1 @@
-Car,w,w,whitw,2324,100.0
-Car,BMW,54,BLUE,2025,100.0
-Car,hh,hh,black,2022,100.0
-Car,jhj,hhj,jjkj,2022,80.0
-Car,er,rt,fg,567,567.0
-Truck,hjhk,guygf,gfu,205,553.0
+2,Truck,ertu,efr,red,2001,300.0

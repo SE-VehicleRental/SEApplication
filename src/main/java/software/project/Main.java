@@ -3,8 +3,9 @@ package software.project;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Welcome to Nablus company for rent vehicles, " );
+		 Manager manager = new Manager();
+	        manager.start();
 	}
-
 }
+ 

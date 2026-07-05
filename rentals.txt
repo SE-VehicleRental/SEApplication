@@ -1,0 +1,7 @@
+
+CustomerID: 1234567
+VehicleID: 3
+Type: Car
+Model: ss
+Price: 100.0
+---------------------

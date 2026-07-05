@@ -217,9 +217,10 @@ public class adminmenu {
 		String model = readModel();
 		int year = readYear();
 		String color = readColor();
+		String plateNumber = readPlateNumber();
 		double price = readPrice();
 
-		saveVehicle(vehicleType, type, model, color, year, price);
+		saveVehicle(vehicleType, type, model, color, year, plateNumber, price);
 
 		System.out.println(vehicleType + " added successfully!");
 	}
@@ -255,7 +256,7 @@ public class adminmenu {
 	
 
 	private void saveVehicle(String vehicleType, String type, String model,
-	        String color, int year, double price) {
+	        String color, int year, String plateNumber, double price) {
 
 	    try {
 	    	 int id = generateVehicleID();
@@ -263,7 +264,7 @@ public class adminmenu {
 	        PrintWriter pw = new PrintWriter(fw);
 
 	        pw.println(id + "," + vehicleType + "," + type + "," +
-	                model + "," + color + "," + year + "," + price);
+	                model + "," + color + "," + plateNumber + "," + year + "," + price);
 	        pw.close();
 	    } catch (IOException e) {
 	        System.out.println("Error saving file: " + e.getMessage());
@@ -383,8 +384,9 @@ public class adminmenu {
 	                System.out.println("Type: " + data[2]);
 	                System.out.println("Model: " + data[3]);
 	                System.out.println("Color: " + data[4]);
-	                System.out.println("Year: " + data[5]);
-	                System.out.println("Price: " + data[6]);
+	                System.out.println("Plate Number: " + data[5]);
+	                System.out.println("Year: " + data[6]);
+	                System.out.println("Price: " + data[7]);
 	                System.out.println("----------------------------------");
 
 	            }
@@ -627,8 +629,9 @@ public class adminmenu {
 	                System.out.println("Type: " + data[2]);
 	                System.out.println("Model: " + data[3]);
 	                System.out.println("Color: " + data[4]);
-	                System.out.println("Year: " + data[5]);
-	                System.out.println("Price: " + data[6]);
+	                System.out.println("Plate Number: " + data[5]);
+	                System.out.println("Year: " + data[6]);
+	                System.out.println("Price: " + data[7]);
 	                System.out.println("----------------------------------");
 	            }
 	        }
@@ -772,6 +775,53 @@ public class adminmenu {
 
 	    }
 
+	}
+	private String readPlateNumber() {
+
+	    while (true) {
+
+	        System.out.print("Enter plate number (6 digits): ");
+	        String plate = input.next();
+
+	        if (!plate.matches("\\d{6}")) {
+	            System.out.println("Invalid plate number! Must be exactly 6 digits.");
+	            continue;
+	        }
+
+	        if (plateExists(plate)) {
+	            System.out.println("Plate number already exists! Try another one.");
+	            continue;
+	        }
+
+	        return plate;
+	    }
+	}
+	
+	private boolean plateExists(String plateNumber) {
+
+	    try {
+	        BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+
+	        String line;
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+	            // plateNumber صار في index 5 حسب التعديل
+	            if (data.length > 5 && data[5].equals(plateNumber)) {
+	                br.close();
+	                return true;
+	            }
+	        }
+
+	        br.close();
+
+	    } catch (IOException e) {
+	        System.out.println("Error checking plate number.");
+	    }
+
+	    return false;
 	}
 	
 }

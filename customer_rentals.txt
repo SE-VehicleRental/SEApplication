@@ -1,0 +1,22 @@
+CustomerID: 1478963
+CustomerName: s
+CustomerPhone: 1478521478
+VehicleID: 4
+VehicleLicenseType: Car
+VehicleType: ww
+VehicleModel: dd
+VehicleColor: dd
+VehicleYear: 2020
+PricePerDay: 345.0
+---------------------
+CustomerID: 1475896
+CustomerName: yo
+CustomerPhone: 1478523695
+VehicleID: 3
+VehicleLicenseType: Car
+VehicleType: BMW
+VehicleModel: ss
+VehicleColor: blue
+VehicleYear: 2012
+PricePerDay: 100.0
+---------------------

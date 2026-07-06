@@ -3,7 +3,6 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Manager {
-	
 	Scanner input = new Scanner(System.in);
 	
     public void start() {
@@ -14,7 +13,8 @@ public class Manager {
             adminLogin();
         } 
         else if (choice == 2) {
-            customerMenu();
+        	customerMenu cm = new customerMenu();
+            cm.showMenu();
         } 
         else {
             System.out.println("Invalid choice");
@@ -71,9 +71,4 @@ public class Manager {
 
 
 
-private void customerMenu() {
-	// TODO Auto-generated method stub
-	
-	
-}
 }

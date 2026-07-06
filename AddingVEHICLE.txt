@@ -1,3 +1,7 @@
 2,Truck,ertu,efr,red,2001,300.0
 3,Car,BMW,ss,blue,147158,2012,100.0
 4,Car,ww,dd,dd,234671,2020,345.0
+5,Motorcycle,oppp,pall,red,093467,2013,90.0
+6,Truck,toyota,pasd,blue,918354,2003,100.0
+7,Bus,dere,dffr,orange,090909,2011,120.0
+8,Car,hondai,sentafe,selver,102030,2022,300.0

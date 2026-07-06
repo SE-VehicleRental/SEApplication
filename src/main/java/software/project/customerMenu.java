@@ -245,11 +245,12 @@ public class customerMenu {
                     vehicles.add(data);
 
                     System.out.println("ID: " + data[0]);
-                    System.out.println("Model: " + data[3]);
-                    System.out.println("Type: " + data[2]);
+                    System.out.println("Type: " + data[1]);
+                    System.out.println("Model: " + data[2]);
+                    System.out.println("Plate Number: " + data[3]);
                     System.out.println("Color: " + data[4]);
-                    System.out.println("Year: " + data[6]);
-                    System.out.println("Price per day: " + data[7]);
+                    System.out.println("Year: " + data[5]);
+                    System.out.println("Price per day: " + data[6]);
                     System.out.println("-------------------------");
                 }
             }
@@ -274,8 +275,15 @@ public class customerMenu {
             for (String[] v : vehicles) {
                 if (Integer.parseInt(v[0]) == id) {
                     System.out.println("You rented: " + v[2] + " " + v[3]);
-                    System.out.println("Price per day: " + v[7]);
+                    System.out.println("Price per day: " + v[6]);
 
+                    //-------------------
+                    System.out.println(java.util.Arrays.toString(v));
+                    System.out.println("Length = " + v.length);
+                    
+                    
+                    
+                    //---------------
                     saveRental(v, customerId, customerName, customerPhone);
                     return;
                 }
@@ -309,8 +317,18 @@ public class customerMenu {
             fw.close();
 
             System.out.println("Rental saved successfully!");
-            Manager m = new Manager();
-            m.start();
+            PromissoryNoteForm form =
+                    new PromissoryNoteForm(
+                            customerName,
+                            customerId,
+                            customerPhone,
+                            v[1],   // Vehicle Type
+                            v[2],   // Vehicle Model
+                            v[3],
+                            v[7]    // Price Per Day
+                    );
+
+            form.setVisible(true);
 
         } catch (IOException e) {
             System.out.println("Error saving rental!");

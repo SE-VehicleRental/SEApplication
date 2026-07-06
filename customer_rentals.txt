@@ -20,3 +20,47 @@ VehicleColor: blue
 VehicleYear: 2012
 PricePerDay: 100.0
 ---------------------
+CustomerID: 0909090
+CustomerName: pop
+CustomerPhone: 0909090909
+VehicleID: 5
+VehicleLicenseType: Motorcycle
+VehicleType: oppp
+VehicleModel: pall
+VehicleColor: red
+VehicleYear: 2013
+PricePerDay: 90.0
+---------------------
+CustomerID: 2222222
+CustomerName: ododo
+CustomerPhone: 3333333333
+VehicleID: 6
+VehicleLicenseType: Truck
+VehicleType: toyota
+VehicleModel: pasd
+VehicleColor: blue
+VehicleYear: 2003
+PricePerDay: 100.0
+---------------------
+CustomerID: 4444444
+CustomerName: erty
+CustomerPhone: 1010101010
+VehicleID: 7
+VehicleLicenseType: Bus
+VehicleType: dere
+VehicleModel: dffr
+VehicleColor: orange
+VehicleYear: 2011
+PricePerDay: 120.0
+---------------------
+CustomerID: 5555555
+CustomerName: zaidan
+CustomerPhone: 1919191919
+VehicleID: 8
+VehicleLicenseType: Car
+VehicleType: hondai
+VehicleModel: sentafe
+VehicleColor: selver
+VehicleYear: 2022
+PricePerDay: 300.0
+---------------------

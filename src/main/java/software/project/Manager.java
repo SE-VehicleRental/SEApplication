@@ -52,7 +52,6 @@ public class Manager {
 	}
 
 	private void adminLogin() {
-		// TODO Auto-generated method stub
 		System.out.print("Enter username: ");
         String username = input.next();
 

@@ -119,7 +119,7 @@ public class adminmenu {
 	
 	public void showmenu() {
 		while (true) {
-		System.out.println("What do you want to do? \n 1-Add \n 2-Delete \n 3-Edit \n");                                                                 
+		System.out.println("What do you want to do? \n 1-Add \n 2-Delete \n 3-Edit \n 4-Back");                                                                 
 		int choice = readInt();                                                  
 		                                                                               
 		switch (choice) {
@@ -135,6 +135,12 @@ public class adminmenu {
         case 3:
             adminedit();
             return;
+            
+        case 4:
+        	Manager m=new Manager();
+        	m.start();
+            return;
+            
 
         default:
             System.out.println("Invalid choice! Please enter a number between 1 and 3.");
@@ -180,9 +186,7 @@ public class adminmenu {
 	                System.out.println("Invalid choice");
 	        }
 
-	        System.out.println("\nDo you want to add another vehicle?");
-	        System.out.println("1- Yes");
-	        System.out.println("2- No (Back)");
+
 
 	        while (true) {
 
@@ -808,7 +812,6 @@ public class adminmenu {
 
 	            String[] data = line.split(",");
 
-	            // plateNumber صار في index 5 حسب التعديل
 	            if (data.length > 5 && data[5].equals(plateNumber)) {
 	                br.close();
 	                return true;

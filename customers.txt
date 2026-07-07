@@ -1,10 +1,9 @@
-
 ID: 1234567
 Name: wijdanr
 Email: wij2@gmail.com
 Phone: 1478523695
-Payment: Cash
-License: [Motorcycle, Truck, Bus]
+Payment: Visa
+License: [Car, Bus]
 ----------------------
 ID: 1478963
 Name: s

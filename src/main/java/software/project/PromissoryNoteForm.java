@@ -5,16 +5,20 @@ import java.awt.*;
 
 public class PromissoryNoteForm extends JFrame {
 
-    public PromissoryNoteForm(String customerName,
-            String customerId,
-            String customerPhone,
-            String vehicleType,
-            String vehicleModel,
-            String plateNumber,
-            String pricePerDay) {
+	public PromissoryNoteForm(
+	        String customerName,
+	        String customerId,
+	        String customerPhone,
+	        String vehicleType,
+	        String vehicleModel,
+	        String VehicleNumber,
+	        String pricePerDay,
+	        String rentalStartDate,
+	        String rentalEndDate,
+	        String totalCost) {
 
         setTitle("Promissory Note");
-        setSize(700, 700);
+        setSize(850, 1050);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -35,49 +39,66 @@ public class PromissoryNoteForm extends JFrame {
         
         JTextArea noteText = new JTextArea();
 
-        noteText.setBounds(50,130,600,300);
+        noteText.setBounds(50,130,650,480);
         noteText.setFont(new Font("Serif", Font.PLAIN, 16));
         noteText.setEditable(false);
         noteText.setLineWrap(true);
         noteText.setWrapStyleWord(true);
 
         noteText.setText(
-                "Date: " + java.time.LocalDate.now() + "\n\n" +
 
-                "I, " + customerName +
-                ", holder of National ID No. " + customerId + ",\n\n" +
+        		"Date : " + java.time.LocalDate.now() + "\n\n"
 
-                "hereby acknowledge that I have rented the following vehicle from Nablus Rent Company.\n\n" +
+        		+ "I, " + customerName
+        		+ ", holder of National ID No. "
+        		+ customerId + ",\n\n"
 
-                "Vehicle Type : " + vehicleType + "\n\n" +
+        		+ "hereby acknowledge that I have rented the following vehicle from "
+        		+ "Nablus Rent Company.\n\n"
 
-                "Vehicle Model : " + vehicleModel + "\n\n" +
+        		+ "Vehicle Type : " + vehicleType + "\n\n"
 
-                "Customer Phone : " + customerPhone + "\n\n" +
-                "Plate Number : " + plateNumber + "\n\n" +
+        		+ "Vehicle Model : " + vehicleModel + "\n\n"
 
-                "Rental Price Per Day : " + pricePerDay + "\n\n" +
-                
-                "Guarantee Amount : 5000 JD\n\n" +
+        		+ "Plate Number : " + VehicleNumber + "\n\n"
 
-                "I undertake to return the vehicle in the same condition in which I received it.\n" +
-                "In case of damage, loss, or failure to return the vehicle,\n" +
-                "I agree to pay the guarantee amount specified by the company.\n\n\n"
-        );
+        		+ "Customer Phone : " + customerPhone + "\n\n"
 
-        panel.add(noteText);
+        		+ "Rental Start Date : " + rentalStartDate + "\n\n"
+
+        		+ "Rental End Date : " + rentalEndDate + "\n\n"
+
+        		+ "Rental Price Per Day : " + pricePerDay + " ₪\n\n"
+
+        		+ "Total Rental Cost : " + totalCost + "₪ \n\n"
+
+        		+ "Guarantee Amount : 5000 JD\n\n"
+
+        		+ "I undertake to return the vehicle in the same condition in which I received it.\n\n"
+
+        		+ "In case of damage, loss, or failure to return the vehicle,\n"
+
+        		+ "I agree to pay the guarantee amount specified by the company.\n\n"
+        		
+        		);
+
+        JScrollPane scrollPane = new JScrollPane(noteText);
+        scrollPane.setBounds(50, 130, 650, 480);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.add(scrollPane);
         
         JLabel signatureLabel = new JLabel("Customer Signature:");
         signatureLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        signatureLabel.setBounds(50, 450, 200, 30);
+        signatureLabel.setBounds(50,630,200,30);
         panel.add(signatureLabel);
         
         SignaturePanel signaturePanel = new SignaturePanel();
-        signaturePanel.setBounds(50, 490, 400, 120);
+        signaturePanel.setBounds(50,670,400,120);
         panel.add(signaturePanel);
         
         JButton pdfButton = new JButton("Generate PDF");
-        pdfButton.setBounds(500, 620, 150, 30);
+        pdfButton.setBounds(520,700,170,35);
         panel.add(pdfButton);
         pdfButton.addActionListener(e -> {
 
@@ -87,7 +108,7 @@ public class PromissoryNoteForm extends JFrame {
                     customerPhone,
                     vehicleType,
                     vehicleModel,
-                    plateNumber,
+                    VehicleNumber,
                     pricePerDay,
                     signaturePanel.getSignatureImage()
                     

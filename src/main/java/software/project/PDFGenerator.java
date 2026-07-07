@@ -19,7 +19,7 @@ public class PDFGenerator {
     	        String customerPhone,
     	        String vehicleType,
     	        String vehicleModel,
-    	        String plateNumber,
+    	        String VehicleNumber,
     	        String pricePerDay,
     	        BufferedImage signatureImage) {
 
@@ -45,11 +45,11 @@ public class PDFGenerator {
 
             document.add(new Paragraph("Vehicle Type: " + vehicleType));
             document.add(new Paragraph("Vehicle Model: " + vehicleModel));
-            document.add(new Paragraph("Plate Number: " + plateNumber));
+            document.add(new Paragraph("Plate Number: " + VehicleNumber));
             document.add(new Paragraph("Price Per Day: " + pricePerDay));
 
             document.add(new Paragraph(" "));
-            document.add(new Paragraph("Guarantee Amount: 5000 JD"));
+            document.add(new Paragraph("Guarantee Amount: 5000 ₪"));
             
             document.add(new Paragraph(" "));
             document.add(new Paragraph("Customer Signature:"));

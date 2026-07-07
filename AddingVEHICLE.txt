@@ -5,3 +5,9 @@
 6,Truck,toyota,pasd,blue,918354,2003,100.0
 7,Bus,dere,dffr,orange,090909,2011,120.0
 8,Car,hondai,sentafe,selver,102030,2022,300.0
+9,Car,hon,hh,red,159874,2010,200.0
+10,Bus,vBus,Vv,black,125874,2015,80.0
+11,Car,Kia,Waa,blue,587421,2022,120.0
+12,Bus,awd,awd,white,147741,2005,200.0
+13,Bus,qaz,qaz,red,895665,2015,75.0
+14,Car,kia,kias,red,548712,2020,500.0

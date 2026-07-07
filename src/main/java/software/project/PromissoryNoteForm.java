@@ -15,8 +15,8 @@ public class PromissoryNoteForm extends JFrame {
 	        String pricePerDay,
 	        String rentalStartDate,
 	        String rentalEndDate,
-	        String totalCost) {
-
+	        String totalCost,
+	        Runnable onConfirmed) {   
         setTitle("Promissory Note");
         setSize(850, 1050);
         setLocationRelativeTo(null);
@@ -29,14 +29,16 @@ public class PromissoryNoteForm extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 22));
         title.setBounds(220, 20, 300, 30);
         panel.add(title);
+
         JLabel company = new JLabel("NABLUS RENT COMPANY");
         company.setFont(new Font("Arial", Font.BOLD, 18));
         company.setBounds(210, 60, 300, 25);
         panel.add(company);
+
         JSeparator line = new JSeparator();
         line.setBounds(40,100,600,5);
         panel.add(line);
-        
+
         JTextArea noteText = new JTextArea();
 
         noteText.setBounds(50,130,650,480);
@@ -79,7 +81,7 @@ public class PromissoryNoteForm extends JFrame {
         		+ "In case of damage, loss, or failure to return the vehicle,\n"
 
         		+ "I agree to pay the guarantee amount specified by the company.\n\n"
-        		
+
         		);
 
         JScrollPane scrollPane = new JScrollPane(noteText);
@@ -87,20 +89,31 @@ public class PromissoryNoteForm extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         panel.add(scrollPane);
-        
+
         JLabel signatureLabel = new JLabel("Customer Signature:");
         signatureLabel.setFont(new Font("Arial", Font.BOLD, 16));
         signatureLabel.setBounds(50,630,200,30);
         panel.add(signatureLabel);
-        
+
         SignaturePanel signaturePanel = new SignaturePanel();
         signaturePanel.setBounds(50,670,400,120);
         panel.add(signaturePanel);
-        
+
         JButton pdfButton = new JButton("Generate PDF");
         pdfButton.setBounds(520,700,170,35);
         panel.add(pdfButton);
+
         pdfButton.addActionListener(e -> {
+
+            if (signaturePanel.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Please sign before generating the PDF!",
+                        "Signature Required",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return; 
+            }
 
             PDFGenerator.generatePDF(
                     customerName,
@@ -111,14 +124,18 @@ public class PromissoryNoteForm extends JFrame {
                     VehicleNumber,
                     pricePerDay,
                     signaturePanel.getSignatureImage()
-                    
             );
+
+            if (onConfirmed != null) {
+                onConfirmed.run();
+            }
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Promissory Note PDF has been created successfully!"
+                    "Promissory note created successfully, and the rental has been saved!"
             );
 
+            pdfButton.setEnabled(false); 
         });
 
         add(panel);

@@ -158,3 +158,51 @@ RentalEndDate: 2026-12-04
 RentalDays: 3
 TotalCost: 1500.0
 ---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1478523695
+VehicleID: 15
+VehicleType: Car
+VehicleModel: Jkd
+PlateNumber: kl
+VehicleColor: blue
+VehicleNumber: 148963
+VehicleYear: 2005
+PricePerDay: 55.0
+RentalStartDate: 2026-11-30
+RentalEndDate: 2026-12-05
+RentalDays: 6
+TotalCost: 330.0
+---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1478523695
+VehicleID: 16
+VehicleType: Car
+VehicleModel: BMW
+PlateNumber: nerto
+VehicleColor: black
+VehicleNumber: 589647
+VehicleYear: 2022
+PricePerDay: 120.0
+RentalStartDate: 2026-12-05
+RentalEndDate: 2026-12-05
+RentalDays: 1
+TotalCost: 120.0
+---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1478523695
+VehicleID: 17
+VehicleType: Car
+VehicleModel: mer
+PlateNumber: mrj
+VehicleColor: black
+VehicleNumber: 158742
+VehicleYear: 2012
+PricePerDay: 55.0
+RentalStartDate: 2026-09-12
+RentalEndDate: 2026-09-12
+RentalDays: 1
+TotalCost: 55.0
+---------------------

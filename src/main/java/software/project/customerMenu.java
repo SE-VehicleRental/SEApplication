@@ -281,9 +281,9 @@ public class customerMenu {
                         System.out.println("ID: " + data[0]);
                         System.out.println("Type: " + data[1]);
                         System.out.println("Model: " + data[2]);
-                        System.out.println("Plate Number: " + data[3]);
+                        System.out.println("Plate Number: " + data[5]);
                         System.out.println("Color: " + data[4]);
-                        System.out.println("Vehicle Number: " + data[5]);
+                
                         System.out.println("Year: " + data[6]);
                         System.out.println("Price per day: " + data[7]);
                         System.out.println("-------------------------");
@@ -342,9 +342,9 @@ public class customerMenu {
                         System.out.println("Rental period: " + days + " day(s)");
                         System.out.println("Total cost: " + totalCost);
 
-                        saveRental(v, customerId, customerName, customerPhone,
-                                   startDate.toString(), endDate.toString(), days, totalCost);
-                        return;
+                        createPromissoryNote(v, customerId, customerName, customerPhone,
+                                startDate.toString(), endDate.toString(), days, totalCost);
+                     return;
                     }
                 }
 
@@ -399,7 +399,7 @@ public class customerMenu {
                     v[7],                     
                     startDate,                
                     endDate,                  
-                    String.valueOf(totalCost) 
+                    String.valueOf(totalCost), null 
             );
 
             form.setVisible(true);
@@ -926,7 +926,62 @@ public class customerMenu {
     
     
     
-    
+    private void createPromissoryNote(String[] v, String customerId, String customerName,
+            String customerPhone, String startDate, String endDate,
+            long rentalDays, double totalCost) {
+
+        PromissoryNoteForm form = new PromissoryNoteForm(
+                customerName,
+                customerId,
+                customerPhone,
+                v[1],
+                v[2],
+                v[3],
+                v[7],
+                startDate,
+                endDate,
+                String.valueOf(totalCost),
+                () -> saveRentalToFile(v, customerId, customerName, customerPhone,
+                        startDate, endDate, rentalDays, totalCost)
+        );
+
+        form.setVisible(true);
+    }
+
+    private void saveRentalToFile(String[] v, String customerId, String customerName,
+            String customerPhone, String startDate, String endDate,
+            long rentalDays, double totalCost) {
+
+        try {
+            FileWriter fw = new FileWriter("customer_rentals.txt", true);
+
+            fw.write("CustomerID: " + customerId + "\n");
+            fw.write("CustomerName: " + customerName + "\n");
+            fw.write("CustomerPhone: " + customerPhone + "\n");
+
+            fw.write("VehicleID: " + v[0] + "\n");
+            fw.write("VehicleType: " + v[1] + "\n");
+            fw.write("VehicleModel: " + v[2] + "\n");
+            fw.write("PlateNumber: " + v[3] + "\n");
+            fw.write("VehicleColor: " + v[4] + "\n");
+            fw.write("VehicleNumber: " + v[5] + "\n");
+            fw.write("VehicleYear: " + v[6] + "\n");
+            fw.write("PricePerDay: " + v[7] + "\n");
+
+            fw.write("RentalStartDate: " + startDate + "\n");
+            fw.write("RentalEndDate: " + endDate + "\n");
+            fw.write("RentalDays: " + rentalDays + "\n");
+            fw.write("TotalCost: " + totalCost + "\n");
+            fw.write("---------------------\n");
+
+            fw.close();
+
+            System.out.println("Rental saved successfully!");
+
+        } catch (IOException e) {
+            System.out.println("Error saving rental!");
+        }
+    }
     
     
     

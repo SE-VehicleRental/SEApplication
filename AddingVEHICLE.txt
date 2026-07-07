@@ -11,3 +11,7 @@
 12,Bus,awd,awd,white,147741,2005,200.0
 13,Bus,qaz,qaz,red,895665,2015,75.0
 14,Car,kia,kias,red,548712,2020,500.0
+15,Car,Jkd,kl,blue,148963,2005,55.0
+16,Car,BMW,nerto,black,589647,2022,120.0
+17,Car,mer,mrj,black,158742,2012,55.0
+18,Car,bmw,bmwjj,blue,159863,2020,80.0

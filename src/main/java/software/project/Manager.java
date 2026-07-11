@@ -20,7 +20,7 @@ public class Manager {
     public void start() {
         System.out.println("please choose your role, \n 1- Admin \n 2- Customer");
 
-        int choice = input.nextInt();
+        int choice = readInt();
 
         if (choice == 1) {
             adminLogin();
@@ -66,11 +66,11 @@ public class Manager {
 
     private void adminLogin() {
 
-        System.out.print("Enter username: ");
-        String username = input.next();
+    	System.out.print("Enter username: ");
+    	String username = input.nextLine().trim();
 
-        System.out.print("Enter password: ");
-        String password = input.next();
+    	System.out.print("Enter password: ");
+    	String password = input.nextLine().trim();
 
         if (checkLogin(username, password)) {
             System.out.println("Login successful");
@@ -81,6 +81,17 @@ public class Manager {
         } else {
             System.out.println("Wrong username or password");
             start();
+        }
+    }
+    
+
+    private int readInt() {
+        while (true) {
+            try {
+                return Integer.parseInt(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
         }
     }
 }

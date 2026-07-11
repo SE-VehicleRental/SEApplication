@@ -33,7 +33,7 @@ public class customerMenu {
 
 		while (true) {
 			System.out.print("Choose option: ");
-			firstChoice = input.nextInt();
+			firstChoice = readInt();
 
 			if (firstChoice == 1 || firstChoice == 2) {
 				break;
@@ -53,7 +53,7 @@ public class customerMenu {
 
 		while (true) {
 			System.out.print("Choose option: ");
-			choice = input.nextInt();
+			choice = readInt();
 
 			if (choice == 1 || choice == 2) {
 				break;
@@ -70,7 +70,7 @@ public class customerMenu {
 		String name;
 		while (true) {
 			System.out.print("Enter name (letters only): ");
-			name = input.next();
+			name = input.nextLine().trim();
 
 			if (validator.isValidName(name)) {
 				break;
@@ -82,7 +82,7 @@ public class customerMenu {
 		String id;
 		while (true) {
 			System.out.print("Enter ID (7 digits only): ");
-			id = input.next();
+			id = input.nextLine().trim();
 
 			if (!validator.isValidId(id)) {
 				System.out.println("Invalid id! 7 digits only.");
@@ -99,7 +99,7 @@ public class customerMenu {
 		String email;
 		while (true) {
 			System.out.print("Enter email (example: abc@email.com): ");
-			email = input.next();
+			email = input.nextLine().trim();
 
 			if (validator.isValidEmail(email)) {
 				break;
@@ -111,7 +111,7 @@ public class customerMenu {
 		String phone;
 		while (true) {
 			System.out.print("Enter 10-digit phone number: ");
-			phone = input.next();
+			phone = input.nextLine().trim();
 
 			if (validator.isValidPhone(phone)) {
 				break;
@@ -126,7 +126,7 @@ public class customerMenu {
 			System.out.println("1- Cash");
 			System.out.println("2- Visa");
 
-			payment = input.nextInt();
+			payment = readInt();
 
 			if (validator.isValidPayment(payment)) {
 				break;
@@ -150,7 +150,7 @@ public class customerMenu {
 				System.out.println((i + 1) + "- " + licenses.get(i));
 			}
 
-			int choice1 = input.nextInt();
+			int choice1 = readInt();
 			if (choice1 < 1 || choice1 > licenses.size()) {
 				System.out.println("Invalid license!");
 				continue;
@@ -167,7 +167,7 @@ public class customerMenu {
 			String answer;
 			while (true) {
 				System.out.print("Do you have another license? (yes/no): ");
-				answer = input.next();
+				answer = input.nextLine().trim();
 
 				if (answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("no")) {
 					break;
@@ -187,7 +187,7 @@ public class customerMenu {
 		String rent;
 		while (true) {
 			System.out.print("Do you want to rent a vehicle? (yes/no): ");
-			rent = input.next();
+			rent = input.nextLine().trim();
 
 			if (rent.equalsIgnoreCase("yes") || rent.equalsIgnoreCase("no")) {
 				break;
@@ -247,7 +247,7 @@ public class customerMenu {
 
 			int choice;
 			while (true) {
-				choice = input.nextInt();
+				choice = readInt();
 
 				if (choice >= 1 && choice <= licenses.size()) {
 					break;
@@ -259,6 +259,28 @@ public class customerMenu {
 			chosenLicense = licenses.get(choice - 1);
 		}
 
+		LocalDate startDate;
+		LocalDate endDate;
+
+		while (true) {
+		    try {
+		        System.out.print("Enter rental start date (yyyy-mm-dd): ");
+		        startDate = LocalDate.parse(input.nextLine().trim());
+
+		        System.out.print("Enter rental end date (yyyy-mm-dd): ");
+		        endDate = LocalDate.parse(input.nextLine().trim());
+
+		        if (endDate.isBefore(startDate)) {
+		            System.out.println("End date cannot be before start date!");
+		            continue;
+		        }
+
+		        break;
+		    } catch (Exception e) {
+		        System.out.println("Invalid date format! Please use yyyy-mm-dd");
+		    }
+		}
+		
 		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
 
 		try {
@@ -274,21 +296,22 @@ public class customerMenu {
 				}
 
 				if (data[1].equalsIgnoreCase(chosenLicense)) {
-					int vehicleId = Integer.parseInt(data[0]);
 
-					if (!isVehicleRented(vehicleId)) {
-						vehicles.add(data);
+				    int vehicleId = Integer.parseInt(data[0]);
 
-						System.out.println("ID: " + data[0]);
-						System.out.println("Type: " + data[1]);
-						System.out.println("Model: " + data[2]);
-						System.out.println("Plate Number: " + data[5]);
-						System.out.println("Color: " + data[4]);
+				    if (isVehicleAvailable(vehicleId, startDate, endDate)) {
 
-						System.out.println("Year: " + data[6]);
-						System.out.println("Price per day: " + data[7]);
-						System.out.println("-------------------------");
-					}
+				        vehicles.add(data);
+
+				        System.out.println("ID: " + data[0]);
+				        System.out.println("Type: " + data[1]);
+				        System.out.println("Model: " + data[2]);
+				        System.out.println("Plate Number: " + data[5]);
+				        System.out.println("Color: " + data[4]);
+				        System.out.println("Year: " + data[6]);
+				        System.out.println("Price per day: " + data[7]);
+				        System.out.println("-------------------------");
+				    }
 				}
 			}
 
@@ -300,39 +323,21 @@ public class customerMenu {
 				m.start();
 				return;
 			}
+			
+			
 
 			while (true) {
 				System.out.print("Enter Vehicle ID to rent: ");
-				int id = input.nextInt();
+				int id = readInt();
 
 				boolean found = false;
 
 				for (String[] v : vehicles) {
 					if (Integer.parseInt(v[0]) == id) {
+						
 						found = true;
 
 						double pricePerDay = Double.parseDouble(v[7]);
-						LocalDate startDate;
-						LocalDate endDate;
-
-						while (true) {
-							try {
-								System.out.print("Enter rental start date (yyyy-mm-dd): ");
-								startDate = LocalDate.parse(input.next());
-
-								System.out.print("Enter rental end date (yyyy-mm-dd): ");
-								endDate = LocalDate.parse(input.next());
-
-								if (endDate.isBefore(startDate)) {
-									System.out.println("End date cannot be before start date!");
-									continue;
-								}
-
-								break;
-							} catch (Exception e) {
-								System.out.println("Invalid date format! Please use yyyy-mm-dd");
-							}
-						}
 
 						long days = rentalCalculator.calculateRentalDays(startDate, endDate);
 
@@ -402,7 +407,7 @@ public class customerMenu {
 
 	private void handleExistingCustomer() {
 		System.out.print("Enter your ID: ");
-		String id = input.next();
+		String id = input.nextLine().trim();
 
 		CustomerData customer = getCustomerById(id);
 
@@ -429,7 +434,7 @@ public class customerMenu {
 			System.out.println("3- Back to main menu");
 			System.out.print("Choose option: ");
 
-			int choice = input.nextInt();
+			int choice = readInt();
 
 			if (choice == 1) {
 				rentVehicle(customer.licenses, customer.id, customer.name, customer.phone);
@@ -457,7 +462,7 @@ public class customerMenu {
 			System.out.println("5- Save changes and back");
 			System.out.print("Choose option: ");
 
-			int choice = input.nextInt();
+			int choice = readInt();
 
 			switch (choice) {
 			case 1:
@@ -496,7 +501,7 @@ public class customerMenu {
 					System.out.println("1- Cash");
 					System.out.println("2- Visa");
 
-					int payment = input.nextInt();
+					int payment = readInt();
 
 					if (validator.isValidPayment(payment)) {
 						customer.payment = payment;
@@ -540,7 +545,7 @@ public class customerMenu {
 				System.out.println((i + 1) + "- " + licenses.get(i));
 			}
 
-			int choice = input.nextInt();
+			int choice = readInt();
 
 			if (choice < 1 || choice > licenses.size()) {
 				System.out.println("Invalid license!");
@@ -810,7 +815,7 @@ public class customerMenu {
 			System.out.println("4- Bus");
 			System.out.println("5- Back");
 
-			int choice = input.nextInt();
+			int choice = readInt();
 			String selectedType = "";
 
 			switch (choice) {
@@ -839,14 +844,14 @@ public class customerMenu {
 
 			String again;
 			while (true) {
-				System.out.print("\nDo you want to view another type? (yes/no): ");
-				again = input.next();
+			    System.out.print("\nDo you want to view another type? (yes/no): ");
+			    again = input.nextLine().trim();
 
-				if (again.equalsIgnoreCase("yes") || again.equalsIgnoreCase("no")) {
-					break;
-				} else {
-					System.out.println("Invalid input!");
-				}
+			    if (again.equalsIgnoreCase("yes") || again.equalsIgnoreCase("no")) {
+			        break;
+			    } else {
+			        System.out.println("Invalid input!");
+			    }
 			}
 
 			if (again.equalsIgnoreCase("no")) {
@@ -868,7 +873,7 @@ public class customerMenu {
 
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split(",");
-
+				
 				if (data.length < 7) {
 					continue;
 				}
@@ -876,7 +881,6 @@ public class customerMenu {
 				if (data[1].equalsIgnoreCase(vehicleType)) {
 					int vehicleId = Integer.parseInt(data[0]);
 
-					if (!isVehicleRented(vehicleId)) {
 						found = true;
 
 						System.out.println("ID: " + data[0]);
@@ -887,7 +891,7 @@ public class customerMenu {
 						System.out.println("Year: " + data[6]);
 						System.out.println("Price per day: " + data[7]);
 						System.out.println("-------------------------");
-					}
+					
 				}
 			}
 
@@ -940,6 +944,33 @@ public class customerMenu {
 			fw.close();
 
 			System.out.println("Rental saved successfully!");
+			
+			while (true) {
+
+			    System.out.print("\nDo you want to rent another vehicle? (yes/no): ");
+			    String answer = input.nextLine().trim();
+
+			    if (answer.equalsIgnoreCase("yes")) {
+
+			        CustomerData customer = getCustomerById(customerId);
+
+			        if (customer != null) {
+			            rentVehicle(customer.licenses, customer.id, customer.name, customer.phone);
+			        }
+
+			        return;
+
+			    } else if (answer.equalsIgnoreCase("no")) {
+
+			        Manager m = new Manager();
+			        m.start();
+			        return;
+
+			    } else {
+
+			        System.out.println("Invalid input! Please enter yes or no.");
+			    }
+			}
 
 		} catch (IOException e) {
 			System.out.println("Error saving rental!");
@@ -964,5 +995,56 @@ public class customerMenu {
 		} catch (IOException e) {
 			System.out.println("Error saving file!");
 		}
+	}
+	
+	private int readInt() {
+	    while (true) {
+	        try {
+	            return Integer.parseInt(input.nextLine());
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input! Please enter a number.");
+	        }
+	    }
+	}
+	
+	private boolean isVehicleAvailable(int vehicleId, LocalDate requestedStart, LocalDate requestedEnd) {
+
+	    try {
+	        BufferedReader br = new BufferedReader(new FileReader("customer_rentals.txt"));
+	        String line;
+
+	        boolean sameVehicle = false;
+	        LocalDate rentalStart = null;
+	        LocalDate rentalEnd = null;
+
+	        while ((line = br.readLine()) != null) {
+
+	            if (line.startsWith("VehicleID: ")) {
+	                int id = Integer.parseInt(line.substring(11).trim());
+	                sameVehicle = (id == vehicleId);
+	            }
+
+	            if (sameVehicle && line.startsWith("RentalStartDate: ")) {
+	                rentalStart = LocalDate.parse(line.substring(17).trim());
+	            }
+
+	            if (sameVehicle && line.startsWith("RentalEndDate: ")) {
+	                rentalEnd = LocalDate.parse(line.substring(15).trim());
+
+	           
+	                if (!(requestedEnd.isBefore(rentalStart) || requestedStart.isAfter(rentalEnd))) {
+	                    br.close();
+	                    return false;
+	                }
+	            }
+	        }
+
+	        br.close();
+
+	    } catch (IOException e) {
+	        return true;
+	    }
+
+	    return true;
 	}
 }

@@ -206,3 +206,35 @@ RentalEndDate: 2026-09-12
 RentalDays: 1
 TotalCost: 55.0
 ---------------------
+CustomerID: 3343343
+CustomerName: ee
+CustomerPhone: 0505060606
+VehicleID: 18
+VehicleType: Car
+VehicleModel: bmw
+PlateNumber: bmwjj
+VehicleColor: blue
+VehicleNumber: 159863
+VehicleYear: 2020
+PricePerDay: 80.0
+RentalStartDate: 2026-10-10
+RentalEndDate: 2027-10-10
+RentalDays: 366
+TotalCost: 29280.0
+---------------------
+CustomerID: 2255664
+CustomerName: kkgo
+CustomerPhone: 0044995577
+VehicleID: 14
+VehicleType: Car
+VehicleModel: kia
+PlateNumber: kias
+VehicleColor: red
+VehicleNumber: 548712
+VehicleYear: 2020
+PricePerDay: 500.0
+RentalStartDate: 2026-08-09
+RentalEndDate: 2026-11-12
+RentalDays: 96
+TotalCost: 48000.0
+---------------------

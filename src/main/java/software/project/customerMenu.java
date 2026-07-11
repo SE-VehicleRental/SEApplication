@@ -3,6 +3,10 @@ package software.project;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class customerMenu {
 
@@ -61,7 +65,7 @@ public class customerMenu {
 		String name;
 		while (true) {
 			System.out.print("Enter name (letters only): ");
-			name = input.next();
+			name = input.nextLine().trim();
 
 			if (validator.isValidName(name)) {
 				break;
@@ -73,7 +77,7 @@ public class customerMenu {
 		String id;
 		while (true) {
 			System.out.print("Enter ID (7 digits only): ");
-			id = input.next();
+			id = input.nextLine().trim();
 
 			if (!validator.isValidId(id)) {
 				System.out.println("Invalid id! 7 digits only.");
@@ -90,7 +94,7 @@ public class customerMenu {
 		String email;
 		while (true) {
 			System.out.print("Enter email (example: abc@email.com): ");
-			email = input.next();
+			email = input.nextLine().trim();
 
 			if (validator.isValidEmail(email)) {
 				break;
@@ -102,7 +106,7 @@ public class customerMenu {
 		String phone;
 		while (true) {
 			System.out.print("Enter 10-digit phone number: ");
-			phone = input.next();
+			phone = input.nextLine().trim();
 
 			if (validator.isValidPhone(phone)) {
 				break;
@@ -136,7 +140,7 @@ public class customerMenu {
 		String rent;
 		while (true) {
 			System.out.print("Do you want to rent a vehicle? (yes/no): ");
-			rent = input.next();
+			rent = input.nextLine().trim();
 
 			if (rent.equalsIgnoreCase("yes") || rent.equalsIgnoreCase("no")) {
 				break;
@@ -157,6 +161,28 @@ public class customerMenu {
 
 		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
 
+		LocalDate startDate;
+		LocalDate endDate;
+
+		while (true) {
+		    try {
+		        System.out.print("Enter rental start date (yyyy-mm-dd): ");
+		        startDate = LocalDate.parse(input.nextLine().trim());
+
+		        System.out.print("Enter rental end date (yyyy-mm-dd): ");
+		        endDate = LocalDate.parse(input.nextLine().trim());
+
+		        if (endDate.isBefore(startDate)) {
+		            System.out.println("End date cannot be before start date!");
+		            continue;
+		        }
+
+		        break;
+		    } catch (Exception e) {
+		        System.out.println("Invalid date format! Please use yyyy-mm-dd");
+		    }
+		}
+		
 		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
 
 		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense);
@@ -183,9 +209,6 @@ public class customerMenu {
 			}
 
 			double pricePerDay = Double.parseDouble(vehicle[7]);
-
-			LocalDate startDate;
-			LocalDate endDate;
 
 			while (true) {
 				try {
@@ -233,7 +256,7 @@ public class customerMenu {
 
 	private void handleExistingCustomer() {
 		System.out.print("Enter your ID: ");
-		String id = input.next();
+		String id = input.nextLine().trim();
 
 		CustomerData customer = customerFileService.getCustomerById(id);
 
@@ -398,14 +421,14 @@ public class customerMenu {
 
 			String again;
 			while (true) {
-				System.out.print("\nDo you want to view another type? (yes/no): ");
-				again = input.next();
+			    System.out.print("\nDo you want to view another type? (yes/no): ");
+			    again = input.nextLine().trim();
 
-				if (again.equalsIgnoreCase("yes") || again.equalsIgnoreCase("no")) {
-					break;
-				} else {
-					System.out.println("Invalid input!");
-				}
+			    if (again.equalsIgnoreCase("yes") || again.equalsIgnoreCase("no")) {
+			        break;
+			    } else {
+			        System.out.println("Invalid input!");
+			    }
 			}
 
 			if (again.equalsIgnoreCase("no")) {

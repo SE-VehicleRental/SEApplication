@@ -2,10 +2,17 @@ package software.project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -14,108 +21,299 @@ class ManagerTest {
     @TempDir
     Path tempDirectory;
 
-    @Test
-    void checkLoginShouldReturnTrueWhenCredentialsAreCorrect()
-            throws IOException {
+    private final PrintStream originalOut = System.out;
 
-        Path adminFile = tempDirectory.resolve("admin.txt");
-
-        Files.writeString(
-                adminFile,
-                "admin,1234\nmanager,abcd"
-        );
-
-        Manager manager = new Manager(adminFile.toFile());
-
-        boolean result = manager.checkLogin("admin", "1234");
-
-        assertTrue(result);
+    @AfterEach
+    void restoreOutput() {
+        System.setOut(originalOut);
     }
 
     @Test
-    void checkLoginShouldReturnFalseWhenPasswordIsWrong()
+    void correctAdminLoginShouldOpenAdminMenu()
             throws IOException {
 
-        Path adminFile = tempDirectory.resolve("admin.txt");
-
-        Files.writeString(
-                adminFile,
-                "admin,1234"
+        File adminFile = createAdminFile(
+                "admin,1234\n"
         );
 
-        Manager manager = new Manager(adminFile.toFile());
+        AtomicBoolean adminMenuOpened =
+                new AtomicBoolean(false);
 
-        boolean result = manager.checkLogin("admin", "wrongPassword");
+        AtomicBoolean customerMenuOpened =
+                new AtomicBoolean(false);
 
-        assertFalse(result);
+        Manager manager = new Manager(
+                adminFile,
+                scannerFor(
+                        "1",
+                        "admin",
+                        "1234"
+                ),
+                () -> adminMenuOpened.set(true),
+                () -> customerMenuOpened.set(true)
+        );
+
+        manager.start();
+
+        assertTrue(adminMenuOpened.get());
+        assertFalse(customerMenuOpened.get());
     }
 
     @Test
-    void checkLoginShouldReturnFalseWhenUsernameDoesNotExist()
+    void customerChoiceShouldOpenCustomerMenu()
             throws IOException {
 
-        Path adminFile = tempDirectory.resolve("admin.txt");
-
-        Files.writeString(
-                adminFile,
-                "admin,1234"
+        File adminFile = createAdminFile(
+                "admin,1234\n"
         );
 
-        Manager manager = new Manager(adminFile.toFile());
+        AtomicBoolean adminMenuOpened =
+                new AtomicBoolean(false);
 
-        boolean result =
-                manager.checkLogin("unknownUser", "1234");
+        AtomicBoolean customerMenuOpened =
+                new AtomicBoolean(false);
 
-        assertFalse(result);
+        Manager manager = new Manager(
+                adminFile,
+                scannerFor("2"),
+                () -> adminMenuOpened.set(true),
+                () -> customerMenuOpened.set(true)
+        );
+
+        manager.start();
+
+        assertFalse(adminMenuOpened.get());
+        assertTrue(customerMenuOpened.get());
     }
 
     @Test
-    void checkLoginShouldFindUserOnSecondLine()
+    void wrongAdminLoginShouldReturnToRoleSelection()
             throws IOException {
 
-        Path adminFile = tempDirectory.resolve("admin.txt");
-
-        Files.writeString(
-                adminFile,
-                "admin,1234\nhala,5678"
+        File adminFile = createAdminFile(
+                "admin,1234\n"
         );
 
-        Manager manager = new Manager(adminFile.toFile());
+        AtomicBoolean adminMenuOpened =
+                new AtomicBoolean(false);
 
-        boolean result = manager.checkLogin("hala", "5678");
+        AtomicBoolean customerMenuOpened =
+                new AtomicBoolean(false);
 
-        assertTrue(result);
+        Manager manager = new Manager(
+                adminFile,
+                scannerFor(
+                        "1",
+                        "admin",
+                        "wrong",
+                        "2"
+                ),
+                () -> adminMenuOpened.set(true),
+                () -> customerMenuOpened.set(true)
+        );
+
+        manager.start();
+
+        assertFalse(adminMenuOpened.get());
+        assertTrue(customerMenuOpened.get());
     }
 
     @Test
-    void checkLoginShouldReturnFalseWhenFileDoesNotExist() {
+    void invalidRoleShouldAskAgain()
+            throws IOException {
 
-        Path missingFile =
-                tempDirectory.resolve("missing-admin.txt");
+        File adminFile = createAdminFile(
+                "admin,1234\n"
+        );
 
-        Manager manager = new Manager(missingFile.toFile());
+        AtomicBoolean customerMenuOpened =
+                new AtomicBoolean(false);
 
-        boolean result =
-                manager.checkLogin("admin", "1234");
+        ByteArrayOutputStream output =
+                captureOutput();
 
-        assertFalse(result);
+        Manager manager = new Manager(
+                adminFile,
+                scannerFor(
+                        "9",
+                        "2"
+                ),
+                () -> {
+                },
+                () -> customerMenuOpened.set(true)
+        );
+
+        manager.start();
+
+        assertTrue(customerMenuOpened.get());
+        assertTrue(
+                output.toString().contains("Invalid choice")
+        );
     }
 
     @Test
-    void checkLoginShouldIgnoreInvalidFileLine()
+    void nonNumericChoiceShouldAskForNumberAgain()
             throws IOException {
 
-        Path adminFile = tempDirectory.resolve("admin.txt");
-
-        Files.writeString(
-                adminFile,
-                "invalidLine\nadmin,1234"
+        File adminFile = createAdminFile(
+                "admin,1234\n"
         );
 
-        Manager manager = new Manager(adminFile.toFile());
+        AtomicBoolean customerMenuOpened =
+                new AtomicBoolean(false);
 
-        boolean result = manager.checkLogin("admin", "1234");
+        ByteArrayOutputStream output =
+                captureOutput();
 
-        assertTrue(result);
+        Manager manager = new Manager(
+                adminFile,
+                scannerFor(
+                        "abc",
+                        "2"
+                ),
+                () -> {
+                },
+                () -> customerMenuOpened.set(true)
+        );
+
+        manager.start();
+
+        assertTrue(customerMenuOpened.get());
+
+        assertTrue(
+                output.toString().contains(
+                        "Invalid input! Please enter a number."
+                )
+        );
+    }
+
+    @Test
+    void checkLoginShouldReturnTrueForCorrectCredentials()
+            throws IOException {
+
+        File adminFile = createAdminFile(
+                "admin,1234\nmanager,abcd\n"
+        );
+
+        Manager manager = new Manager(adminFile);
+
+        assertTrue(
+                manager.checkLogin("admin", "1234")
+        );
+    }
+
+    @Test
+    void checkLoginShouldFindUserOnLaterLine()
+            throws IOException {
+
+        File adminFile = createAdminFile(
+                "admin,1234\nhala,5678\n"
+        );
+
+        Manager manager = new Manager(adminFile);
+
+        assertTrue(
+                manager.checkLogin("hala", "5678")
+        );
+    }
+
+    @Test
+    void wrongPasswordShouldReturnFalse()
+            throws IOException {
+
+        File adminFile = createAdminFile(
+                "admin,1234\n"
+        );
+
+        Manager manager = new Manager(adminFile);
+
+        assertFalse(
+                manager.checkLogin("admin", "wrong")
+        );
+    }
+
+    @Test
+    void unknownUsernameShouldReturnFalse()
+            throws IOException {
+
+        File adminFile = createAdminFile(
+                "admin,1234\n"
+        );
+
+        Manager manager = new Manager(adminFile);
+
+        assertFalse(
+                manager.checkLogin("unknown", "1234")
+        );
+    }
+
+    @Test
+    void malformedLineShouldBeIgnored()
+            throws IOException {
+
+        File adminFile = createAdminFile(
+                "invalidLine\nadmin,1234\n"
+        );
+
+        Manager manager = new Manager(adminFile);
+
+        assertTrue(
+                manager.checkLogin("admin", "1234")
+        );
+    }
+
+    @Test
+    void missingAdminFileShouldReturnFalse() {
+
+        File missingFile =
+                tempDirectory.resolve("missing-admin.txt")
+                        .toFile();
+
+        Manager manager = new Manager(missingFile);
+
+        assertFalse(
+                manager.checkLogin("admin", "1234")
+        );
+    }
+
+    @Test
+    void defaultConstructorShouldCreateManager() {
+        assertNotNull(new Manager());
+    }
+
+    private File createAdminFile(String content)
+            throws IOException {
+
+        Path file =
+                tempDirectory.resolve("admin.txt");
+
+        Files.writeString(file, content);
+
+        return file.toFile();
+    }
+
+    private Scanner scannerFor(String... values) {
+
+        String text = String.join("\n", values);
+
+        if (!text.isEmpty()) {
+            text += "\n";
+        }
+
+        return new Scanner(
+                new ByteArrayInputStream(
+                        text.getBytes()
+                )
+        );
+    }
+
+    private ByteArrayOutputStream captureOutput() {
+
+        ByteArrayOutputStream output =
+                new ByteArrayOutputStream();
+
+        System.setOut(new PrintStream(output));
+
+        return output;
     }
 }

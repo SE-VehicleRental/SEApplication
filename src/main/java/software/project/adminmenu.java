@@ -5,7 +5,7 @@ import java.io.*;
 public class adminmenu {
 	Scanner input = new Scanner(System.in);
 	
-	private int readInt() {
+	public  int readInt() {
 
 	    while (true) {
 
@@ -19,10 +19,13 @@ public class adminmenu {
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected String readType() {
 
+=======
+	public  String readType() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
-
 	        System.out.print("Enter type: ");
 	        String type = input.next();
 
@@ -34,23 +37,33 @@ public class adminmenu {
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected String readModel() {
 
+=======
+	
+	
+	public  String readModel() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
-
 	        System.out.print("Enter model: ");
 	        String model = input.next();
 
 	        if (model.matches("[A-Za-z0-9]+")) {
 	            return model;
 	        }
-
 	        System.out.println("Invalid model!");
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected String readColor() {
 
+=======
+	
+	
+	public  String readColor() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
 
 	        System.out.print("Enter color: ");
@@ -59,12 +72,17 @@ public class adminmenu {
 	        if (color.matches("[A-Za-z]+")) {
 	            return color;
 	        }
-
 	        System.out.println("Invalid color! Please enter letters only.");
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected int readYear() {
+=======
+	
+	
+	public  int readYear() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    while (true) {
 
@@ -90,7 +108,11 @@ public class adminmenu {
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected double readPrice() {
+=======
+	public  double readPrice() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    while (true) {
 
@@ -117,7 +139,7 @@ public class adminmenu {
 	}
 	
 	
-	public void showmenu() {
+	public  void showmenu() {
 		while (true) {
 		System.out.println("What do you want to do? \n 1-Add \n 2-Delete \n 3-Edit \n 4-Back");                                                                 
 		int choice = readInt();                                                  
@@ -150,7 +172,11 @@ public class adminmenu {
 
 	
 
+<<<<<<< HEAD
 	protected void adminadd() {
+=======
+	public  void adminadd() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
 	        System.out.println("ADD VEHICLE");
 	        System.out.println("1-Car");
@@ -213,7 +239,11 @@ public class adminmenu {
 	    }
 	
 	
+<<<<<<< HEAD
 	protected void enterVehicleData(String vehicleType) {
+=======
+	public  void enterVehicleData(String vehicleType) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 		System.out.println("=== Add " + vehicleType + " ===");
 
@@ -230,7 +260,11 @@ public class adminmenu {
 	}
 	
 	
+<<<<<<< HEAD
 	public int generateVehicleID() {
+=======
+	public  int generateVehicleID() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    int lastID = 0;
 
@@ -259,7 +293,11 @@ public class adminmenu {
 	}
 	
 
+<<<<<<< HEAD
 	protected void saveVehicle(String vehicleType, String type, String model,
+=======
+	public  void saveVehicle(String vehicleType, String type, String model,
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	        String color, int year, String plateNumber, double price) {
 
 	    try {
@@ -276,7 +314,11 @@ public class adminmenu {
 	}
 	
 	
+<<<<<<< HEAD
 	protected void admindelete() {
+=======
+	public  void admindelete() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    System.out.println("DELETE VEHICLE");
 	    System.out.println("1-Car");
@@ -319,7 +361,11 @@ public class adminmenu {
 
 	}
 	
+<<<<<<< HEAD
 	protected void adminedit() {
+=======
+	public  void adminedit() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    while (true) {
 
@@ -366,7 +412,11 @@ public class adminmenu {
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected void displayVehiclesForEdit(String vehicleType) {
+=======
+	public  void displayVehiclesForEdit(String vehicleType) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    try {
 
@@ -462,7 +512,11 @@ public class adminmenu {
 	    }
 
 	}
+<<<<<<< HEAD
 	protected void editVehicle(int id) {
+=======
+	public  void editVehicle(int id) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 		System.out.println("\nWhat do you want to edit?");
 		System.out.println("1-Type");
@@ -611,7 +665,11 @@ public class adminmenu {
 	}
 	
 	
+<<<<<<< HEAD
 	protected void displayVehicles(String vehicleType) {
+=======
+	public  void displayVehicles(String vehicleType) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    try {
 
@@ -706,7 +764,11 @@ public class adminmenu {
 
 	}
 	
+<<<<<<< HEAD
 	protected void deleteVehicle(int id) {
+=======
+	public  void deleteVehicle(int id) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    try {
 
@@ -780,10 +842,14 @@ public class adminmenu {
 	    }
 
 	}
+<<<<<<< HEAD
 	protected String readPlateNumber() {
 
+=======
+	
+	public String readPlateNumber() {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
-
 	        System.out.print("Enter plate number (6 digits): ");
 	        String plate = input.next();
 
@@ -791,17 +857,25 @@ public class adminmenu {
 	            System.out.println("Invalid plate number! Must be exactly 6 digits.");
 	            continue;
 	        }
-
 	        if (plateExists(plate)) {
 	            System.out.println("Plate number already exists! Try another one.");
 	            continue;
 	        }
-
 	        return plate;
 	    }
 	}
 	
+<<<<<<< HEAD
 	protected boolean plateExists(String plateNumber) {
+=======
+	
+	public boolean isValidPlateNumber(String plate) {
+	    return plate.matches("\\d{6}");
+	}
+	
+	
+	public boolean plateExists(String plateNumber) {
+>>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	    try {
 	        BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));

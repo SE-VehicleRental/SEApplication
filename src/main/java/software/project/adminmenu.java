@@ -5,7 +5,7 @@ import java.io.*;
 public class adminmenu {
 	Scanner input = new Scanner(System.in);
 	
-	private int readInt() {
+	public  int readInt() {
 
 	    while (true) {
 
@@ -19,10 +19,8 @@ public class adminmenu {
 	    }
 	}
 	
-	private String readType() {
-
+	public  String readType() {
 	    while (true) {
-
 	        System.out.print("Enter type: ");
 	        String type = input.next();
 
@@ -34,23 +32,23 @@ public class adminmenu {
 	    }
 	}
 	
-	private String readModel() {
-
+	
+	
+	public  String readModel() {
 	    while (true) {
-
 	        System.out.print("Enter model: ");
 	        String model = input.next();
 
 	        if (model.matches("[A-Za-z0-9]+")) {
 	            return model;
 	        }
-
 	        System.out.println("Invalid model!");
 	    }
 	}
 	
-	private String readColor() {
-
+	
+	
+	public  String readColor() {
 	    while (true) {
 
 	        System.out.print("Enter color: ");
@@ -59,12 +57,13 @@ public class adminmenu {
 	        if (color.matches("[A-Za-z]+")) {
 	            return color;
 	        }
-
 	        System.out.println("Invalid color! Please enter letters only.");
 	    }
 	}
 	
-	private int readYear() {
+	
+	
+	public  int readYear() {
 
 	    while (true) {
 
@@ -90,7 +89,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private double readPrice() {
+	public  double readPrice() {
 
 	    while (true) {
 
@@ -117,7 +116,7 @@ public class adminmenu {
 	}
 	
 	
-	public void showmenu() {
+	public  void showmenu() {
 		while (true) {
 		System.out.println("What do you want to do? \n 1-Add \n 2-Delete \n 3-Edit \n 4-Back");                                                                 
 		int choice = readInt();                                                  
@@ -150,7 +149,7 @@ public class adminmenu {
 
 	
 
-	private void adminadd() {
+	public  void adminadd() {
 	    while (true) {
 	        System.out.println("ADD VEHICLE");
 	        System.out.println("1-Car");
@@ -213,7 +212,7 @@ public class adminmenu {
 	    }
 	
 	
-	private void enterVehicleData(String vehicleType) {
+	public  void enterVehicleData(String vehicleType) {
 
 		System.out.println("=== Add " + vehicleType + " ===");
 
@@ -230,7 +229,7 @@ public class adminmenu {
 	}
 	
 	
-	private int generateVehicleID() {
+	public  int generateVehicleID() {
 
 	    int lastID = 0;
 
@@ -259,7 +258,7 @@ public class adminmenu {
 	}
 	
 
-	private void saveVehicle(String vehicleType, String type, String model,
+	public  void saveVehicle(String vehicleType, String type, String model,
 	        String color, int year, String plateNumber, double price) {
 
 	    try {
@@ -276,7 +275,7 @@ public class adminmenu {
 	}
 	
 	
-	private void admindelete() {
+	public  void admindelete() {
 
 	    System.out.println("DELETE VEHICLE");
 	    System.out.println("1-Car");
@@ -319,7 +318,7 @@ public class adminmenu {
 
 	}
 	
-	private void adminedit() {
+	public  void adminedit() {
 
 	    while (true) {
 
@@ -366,7 +365,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private void displayVehiclesForEdit(String vehicleType) {
+	public  void displayVehiclesForEdit(String vehicleType) {
 
 	    try {
 
@@ -462,7 +461,7 @@ public class adminmenu {
 	    }
 
 	}
-	private void editVehicle(int id) {
+	public  void editVehicle(int id) {
 
 		System.out.println("\nWhat do you want to edit?");
 		System.out.println("1-Type");
@@ -611,7 +610,7 @@ public class adminmenu {
 	}
 	
 	
-	private void displayVehicles(String vehicleType) {
+	public  void displayVehicles(String vehicleType) {
 
 	    try {
 
@@ -706,7 +705,7 @@ public class adminmenu {
 
 	}
 	
-	private void deleteVehicle(int id) {
+	public  void deleteVehicle(int id) {
 
 	    try {
 
@@ -780,10 +779,9 @@ public class adminmenu {
 	    }
 
 	}
-	private String readPlateNumber() {
-
+	
+	public String readPlateNumber() {
 	    while (true) {
-
 	        System.out.print("Enter plate number (6 digits): ");
 	        String plate = input.next();
 
@@ -791,17 +789,21 @@ public class adminmenu {
 	            System.out.println("Invalid plate number! Must be exactly 6 digits.");
 	            continue;
 	        }
-
 	        if (plateExists(plate)) {
 	            System.out.println("Plate number already exists! Try another one.");
 	            continue;
 	        }
-
 	        return plate;
 	    }
 	}
 	
-	private boolean plateExists(String plateNumber) {
+	
+	public boolean isValidPlateNumber(String plate) {
+	    return plate.matches("\\d{6}");
+	}
+	
+	
+	public boolean plateExists(String plateNumber) {
 
 	    try {
 	        BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));

@@ -1,23 +1,52 @@
 package software.project;
 
 import java.io.BufferedReader;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Provides services for managing rental records stored in a text file.
+ * This class allows checking vehicle availability, displaying customer
+ * rental history, and saving new rental information.
+ *
+ * @author Jannat Zaidan, Hala Sleibe, Wijdan Risheh
+ * @version 1.0
+ */
+
 public class RentalFileService {
 
     private final String rentalsFile;
 
+    /**
+     * Creates a RentalFileService object using the default rental file.
+     */
+    
     public RentalFileService() {
         this("customer_rentals.txt");
     }
+    
+    /**
+     * Creates a RentalFileService object with a specified rental file.
+     *
+     * @param rentalsFile The name of the rental file to be used.
+     */
 
     public RentalFileService(String rentalsFile) {
         this.rentalsFile = rentalsFile;
     }
 
+    /**
+     * Checks whether a vehicle is currently rented.
+     * A vehicle is considered rented if its rental end date
+     * is today or in the future.
+     *
+     * @param vehicleId The ID of the vehicle to check.
+     * @return true if the vehicle is currently rented, otherwise false.
+     */
+    
     public boolean isVehicleRented(int vehicleId) {
 
         try (BufferedReader br =
@@ -59,6 +88,15 @@ public class RentalFileService {
         return false;
     }
 
+    /**
+     * Checks whether a vehicle is currently rented.
+     * A vehicle is considered rented if its rental end date
+     * is today or in the future.
+     *
+     * @param vehicleId The ID of the vehicle to check.
+     * @return true if the vehicle is currently rented, otherwise false.
+     */
+    
     public void showCustomerRentals(String customerId) {
 
         System.out.println("\n=== YOUR RENTALS ===");
@@ -109,6 +147,19 @@ public class RentalFileService {
             );
         }
     }
+    
+    /**
+     * Saves a new rental record to the rentals file.
+     *
+     * @param vehicle An array containing the vehicle information.
+     * @param customerId The customer's ID.
+     * @param customerName The customer's name.
+     * @param customerPhone The customer's phone number.
+     * @param startDate The rental start date.
+     * @param endDate The rental end date.
+     * @param rentalDays The total number of rental days.
+     * @param totalCost The total rental cost.
+     */
 
     public void saveRentalToFile(
             String[] vehicle,

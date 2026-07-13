@@ -14,6 +14,7 @@ public class customerMenu {
 	private final VehicleFileService vehicleFileService = new VehicleFileService();
 	private final LicenseService licenseService = new LicenseService();
 	private final CustomerRegistrationService registrationService = new CustomerRegistrationService();
+	private final VehicleBrowsingService vehicleBrowsingService = new VehicleBrowsingService();
 
 	public void showMenu() {
 
@@ -34,7 +35,10 @@ public class customerMenu {
 			}
 		}
 		if (firstChoice == 1) {
-			showVehiclesWithoutLogin();
+			vehicleBrowsingService.showVehiclesWithoutLogin(input, () -> {
+				Manager manager = new Manager();
+				manager.start();
+			});
 			return;
 		}
 
@@ -99,7 +103,7 @@ public class customerMenu {
 			return;
 		}
 
-		displayVehicles(vehicles);
+		vehicleBrowsingService.displayVehicles(vehicles);
 
 		while (true) {
 			System.out.print("Enter Vehicle ID to rent: ");
@@ -144,20 +148,6 @@ public class customerMenu {
 					System.out.println("Invalid date! " + e.getMessage());
 				}
 			}
-		}
-	}
-
-	private void displayVehicles(ArrayList<String[]> vehicles) {
-
-		for (String[] vehicle : vehicles) {
-			System.out.println("ID: " + vehicle[0]);
-			System.out.println("Type: " + vehicle[1]);
-			System.out.println("Model: " + vehicle[2]);
-			System.out.println("Plate Number: " + vehicle[3]);
-			System.out.println("Color: " + vehicle[4]);
-			System.out.println("Year: " + vehicle[6]);
-			System.out.println("Price per day: " + vehicle[7]);
-			System.out.println("-------------------------");
 		}
 	}
 
@@ -287,77 +277,6 @@ public class customerMenu {
 				System.out.println("Invalid choice!");
 			}
 		}
-	}
-
-	private void showVehiclesWithoutLogin() {
-
-		while (true) {
-			System.out.println("\nChoose vehicle type:");
-			System.out.println("1- Car");
-			System.out.println("2- Motorcycle");
-			System.out.println("3- Truck");
-			System.out.println("4- Bus");
-			System.out.println("5- Back");
-
-			int choice = readInt();
-			String selectedType = "";
-
-			switch (choice) {
-			case 1:
-				selectedType = "Car";
-				break;
-			case 2:
-				selectedType = "Motorcycle";
-				break;
-			case 3:
-				selectedType = "Truck";
-				break;
-			case 4:
-				selectedType = "Bus";
-				break;
-			case 5:
-				Manager m = new Manager();
-				m.start();
-				return;
-			default:
-				System.out.println("Invalid choice!");
-				continue;
-			}
-
-			displayAvailableVehiclesByType(selectedType);
-
-			String again;
-			while (true) {
-				System.out.print("\nDo you want to view another type? (yes/no): ");
-				again = input.nextLine().trim();
-
-				if (again.equalsIgnoreCase("yes") || again.equalsIgnoreCase("no")) {
-					break;
-				} else {
-					System.out.println("Invalid input!");
-				}
-			}
-
-			if (again.equalsIgnoreCase("no")) {
-				Manager m = new Manager();
-				m.start();
-				return;
-			}
-		}
-	}
-
-	private void displayAvailableVehiclesByType(String vehicleType) {
-
-		System.out.println("\nAvailable " + vehicleType + " vehicles:\n");
-
-		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(vehicleType);
-
-		if (vehicles.isEmpty()) {
-			System.out.println("No available " + vehicleType + " vehicles found.");
-			return;
-		}
-
-		displayVehicles(vehicles);
 	}
 
 	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,

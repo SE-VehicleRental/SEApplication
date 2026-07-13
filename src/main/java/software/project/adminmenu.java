@@ -19,7 +19,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private String readType() {
+	protected String readType() {
 
 	    while (true) {
 
@@ -34,7 +34,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private String readModel() {
+	protected String readModel() {
 
 	    while (true) {
 
@@ -49,7 +49,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private String readColor() {
+	protected String readColor() {
 
 	    while (true) {
 
@@ -64,7 +64,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private int readYear() {
+	protected int readYear() {
 
 	    while (true) {
 
@@ -90,7 +90,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private double readPrice() {
+	protected double readPrice() {
 
 	    while (true) {
 
@@ -143,14 +143,14 @@ public class adminmenu {
             
 
         default:
-            System.out.println("Invalid choice! Please enter a number between 1 and 3.");
+            System.out.println("Invalid choice! Please enter a number between 1 and 4.");
     }                                        
         }
 	}
 
 	
 
-	private void adminadd() {
+	protected void adminadd() {
 	    while (true) {
 	        System.out.println("ADD VEHICLE");
 	        System.out.println("1-Car");
@@ -213,7 +213,7 @@ public class adminmenu {
 	    }
 	
 	
-	private void enterVehicleData(String vehicleType) {
+	protected void enterVehicleData(String vehicleType) {
 
 		System.out.println("=== Add " + vehicleType + " ===");
 
@@ -230,7 +230,7 @@ public class adminmenu {
 	}
 	
 	
-	private int generateVehicleID() {
+	public int generateVehicleID() {
 
 	    int lastID = 0;
 
@@ -259,7 +259,7 @@ public class adminmenu {
 	}
 	
 
-	private void saveVehicle(String vehicleType, String type, String model,
+	protected void saveVehicle(String vehicleType, String type, String model,
 	        String color, int year, String plateNumber, double price) {
 
 	    try {
@@ -276,7 +276,7 @@ public class adminmenu {
 	}
 	
 	
-	private void admindelete() {
+	protected void admindelete() {
 
 	    System.out.println("DELETE VEHICLE");
 	    System.out.println("1-Car");
@@ -319,7 +319,7 @@ public class adminmenu {
 
 	}
 	
-	private void adminedit() {
+	protected void adminedit() {
 
 	    while (true) {
 
@@ -366,7 +366,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private void displayVehiclesForEdit(String vehicleType) {
+	protected void displayVehiclesForEdit(String vehicleType) {
 
 	    try {
 
@@ -462,7 +462,7 @@ public class adminmenu {
 	    }
 
 	}
-	private void editVehicle(int id) {
+	protected void editVehicle(int id) {
 
 		System.out.println("\nWhat do you want to edit?");
 		System.out.println("1-Type");
@@ -611,7 +611,7 @@ public class adminmenu {
 	}
 	
 	
-	private void displayVehicles(String vehicleType) {
+	protected void displayVehicles(String vehicleType) {
 
 	    try {
 
@@ -706,7 +706,7 @@ public class adminmenu {
 
 	}
 	
-	private void deleteVehicle(int id) {
+	protected void deleteVehicle(int id) {
 
 	    try {
 
@@ -780,7 +780,7 @@ public class adminmenu {
 	    }
 
 	}
-	private String readPlateNumber() {
+	protected String readPlateNumber() {
 
 	    while (true) {
 
@@ -801,7 +801,7 @@ public class adminmenu {
 	    }
 	}
 	
-	private boolean plateExists(String plateNumber) {
+	protected boolean plateExists(String plateNumber) {
 
 	    try {
 	        BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));

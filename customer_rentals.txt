@@ -238,3 +238,19 @@ RentalEndDate: 2026-11-12
 RentalDays: 96
 TotalCost: 48000.0
 ---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1478523695
+VehicleID: 11
+VehicleType: Car
+VehicleModel: Kia
+PlateNumber: Waa
+VehicleColor: blue
+VehicleNumber: 587421
+VehicleYear: 2022
+PricePerDay: 120.0
+RentalStartDate: 2026-09-11
+RentalEndDate: 2026-09-13
+RentalDays: 3
+TotalCost: 360.0
+---------------------

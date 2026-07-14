@@ -118,6 +118,8 @@ public class customerMenu {
 			}
 		}
 	}
+	
+	
 
 	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,
 			String startDate, String endDate, long rentalDays, double totalCost) {
@@ -126,6 +128,9 @@ public class customerMenu {
 						customerId, customerName, customerPhone, startDate, endDate, rentalDays, totalCost));
 		form.setVisible(true);
 	}
+	
+	
+	
 
 	private int readInt() {
 		while (true) {

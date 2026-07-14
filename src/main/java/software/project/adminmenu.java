@@ -260,6 +260,9 @@ public class adminmenu {
 		}
 	}
 
+	
+
+	
 	public void admindelete() {
 
 		System.out.println("DELETE VEHICLE");
@@ -350,6 +353,8 @@ public class adminmenu {
 		}
 	}
 
+	
+	
 	public void displayVehiclesForEdit(String vehicleType) {
 
 		try {
@@ -446,322 +451,401 @@ public class adminmenu {
 
 	}
 
+	public boolean editVehicleFromFile(String fileName, int id, int choice, String newValue) {
+
+	    try {
+
+	        BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+	        FileWriter fw = new FileWriter("temp.txt");
+	        PrintWriter pw = new PrintWriter(fw);
+
+	        String line;
+	        boolean edited = false;
+
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+
+	            if (Integer.parseInt(data[0]) == id) {
+
+
+	                switch (choice) {
+
+	                case 1:
+	                    data[2] = newValue;
+	                    break;
+
+	                case 2:
+	                    data[3] = newValue;
+	                    break;
+
+	                case 3:
+	                    data[4] = newValue;
+	                    break;
+
+	                case 4:
+	                    data[5] = newValue;
+	                    break;
+
+	                case 5:
+	                    data[6] = newValue;
+	                    break;
+
+	                default:
+	                    br.close();
+	                    pw.close();
+	                    return false;
+	                }
+
+
+	                edited = true;
+	            }
+
+
+	            pw.println(String.join(",", data));
+	        }
+
+
+	        br.close();
+	        pw.close();
+
+
+	        File oldFile = new File(fileName);
+	        File newFile = new File("temp.txt");
+
+
+	        oldFile.delete();
+	        newFile.renameTo(oldFile);
+
+
+	        return edited;
+
+
+	    } catch (IOException e) {
+
+	        return false;
+	    }
+	}
+	
+	
 	public void editVehicle(int id) {
 
-		System.out.println("\nWhat do you want to edit?");
-		System.out.println("1-Type");
-		System.out.println("2-Model");
-		System.out.println("3-Color");
-		System.out.println("4-Year");
-		System.out.println("5-Price");
+	    System.out.println("\nWhat do you want to edit?");
+	    System.out.println("1-Type");
+	    System.out.println("2-Model");
+	    System.out.println("3-Color");
+	    System.out.println("4-Year");
+	    System.out.println("5-Price");
 
-		int choice;
+	    int choice;
 
-		while (true) {
+	    while (true) {
 
-			choice = readInt();
+	        choice = readInt();
 
-			if (choice >= 1 && choice <= 5) {
-				break;
-			}
+	        if (choice >= 1 && choice <= 5) {
+	            break;
+	        }
 
-			System.out.println("Invalid choice! Please enter a number between 1 and 5.");
-		}
+	        System.out.println("Invalid choice! Please enter a number between 1 and 5.");
+	    }
 
-		String newValue = "";
 
-		switch (choice) {
+	    String newValue = "";
 
-		case 1:
-			newValue = readType();
-			break;
+	    switch (choice) {
 
-		case 2:
-			newValue = readModel();
-			break;
+	    case 1:
+	        newValue = readType();
+	        break;
 
-		case 3:
-			newValue = readColor();
-			break;
+	    case 2:
+	        newValue = readModel();
+	        break;
 
-		case 4:
-			newValue = String.valueOf(readYear());
-			break;
+	    case 3:
+	        newValue = readColor();
+	        break;
 
-		case 5:
-			newValue = String.valueOf(readPrice());
-			break;
+	    case 4:
+	        newValue = String.valueOf(readYear());
+	        break;
 
-		}
+	    case 5:
+	        newValue = String.valueOf(readPrice());
+	        break;
+	    }
 
-		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+	    boolean edited = editVehicleFromFile(
+	            "AddingVEHICLE.txt",
+	            id,
+	            choice,
+	            newValue
+	    );
 
-			FileWriter fw = new FileWriter("temp.txt");
-			PrintWriter pw = new PrintWriter(fw);
 
-			String line;
-			boolean edited = false;
+	    if (edited)
+	        System.out.println("Vehicle updated successfully.");
+	    else
+	        System.out.println("Vehicle ID not found.");
 
-			while ((line = br.readLine()) != null) {
 
-				String[] data = line.split(",");
+	    System.out.println("\nDo you want to edit another vehicle?");
+	    System.out.println("1- Yes");
+	    System.out.println("2- No (Back)");
 
-				if (Integer.parseInt(data[0]) == id) {
+	    while (true) {
 
-					switch (choice) {
+	        int again = readInt();
 
-					case 1:
-						data[2] = newValue;
-						break;
+	        if (again == 1) {
+	            adminedit();
+	            return;
+	        }
 
-					case 2:
-						data[3] = newValue;
-						break;
+	        else if (again == 2) {
+	            showmenu();
+	            return;
+	        }
 
-					case 3:
-						data[4] = newValue;
-						break;
-
-					case 4:
-						data[5] = newValue;
-						break;
-
-					case 5:
-						data[6] = newValue;
-						break;
-
-					default:
-						System.out.println("Invalid choice.");
-						br.close();
-						pw.close();
-						return;
-					}
-
-					edited = true;
-				}
-
-				pw.println(String.join(",", data));
-
-			}
-
-			br.close();
-			pw.close();
-
-			File oldFile = new File("AddingVEHICLE.txt");
-			File newFile = new File("temp.txt");
-
-			oldFile.delete();
-			newFile.renameTo(oldFile);
-
-			if (edited)
-				System.out.println("Vehicle updated successfully.");
-			else
-				System.out.println("Vehicle ID not found.");
-
-			System.out.println("\nDo you want to edit another vehicle?");
-			System.out.println("1- Yes");
-			System.out.println("2- No (Back)");
-
-			int again;
-
-			while (true) {
-
-				again = readInt();
-
-				if (again == 1) {
-					adminedit();
-					return;
-				}
-
-				else if (again == 2) {
-					showmenu();
-					return;
-				}
-
-				else {
-					System.out.println("Invalid choice! Please enter 1 or 2.");
-				}
-
-			}
-
-		} catch (IOException e) {
-
-			System.out.println("Error editing vehicle.");
-
-		}
-
+	        else {
+	            System.out.println("Invalid choice! Please enter 1 or 2.");
+	        }
+	    }
 	}
+	
+	
+	public boolean displayVehiclesFromFile(String fileName, String vehicleType) {
 
+	    boolean found = false;
+
+	    try {
+
+	        BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+	        String line;
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+
+	            if (data[1].equalsIgnoreCase(vehicleType)) {
+
+	                found = true;
+
+	                System.out.println("----------------------------------");
+	                System.out.println("ID: " + data[0]);
+	                System.out.println("Type: " + data[2]);
+	                System.out.println("Model: " + data[3]);
+	                System.out.println("Color: " + data[4]);
+	                System.out.println("Plate Number: " + data[5]);
+	                System.out.println("Year: " + data[6]);
+	                System.out.println("Price: " + data[7]);
+	                System.out.println("----------------------------------");
+	            }
+	        }
+
+
+	        br.close();
+
+	        return found;
+
+
+	    } catch (IOException e) {
+
+	        return false;
+	    }
+	}
+	
+	
+	
 	public void displayVehicles(String vehicleType) {
 
+
+	    boolean found = displayVehiclesFromFile(
+	            "AddingVEHICLE.txt",
+	            vehicleType
+	    );
+
+
+	    if (!found) {
+
+	        System.out.println("No " + vehicleType + " found.");
+
+	        System.out.println("\nDo you want to choose another vehicle type?");
+	        System.out.println("1- Yes");
+	        System.out.println("2- No (Back)");
+
+	        int again = readInt();
+
+	        if (again == 1) {
+	            admindelete();
+	        } else {
+	            showmenu();
+	        }
+
+	        return;
+	    }
+
+
+	    int id;
+
+	    while (true) {
+
+	        System.out.print("Enter Vehicle ID to delete: ");
+	        id = readInt();
+
+	        boolean exists = checkVehicleExists(
+	                "AddingVEHICLE.txt",
+	                id,
+	                vehicleType
+	        );
+
+
+	        if (exists) {
+	            break;
+	        }
+
+
+	        System.out.println(
+	            "Vehicle ID not found. Please enter a valid ID."
+	        );
+
+	    }
+
+
+	    deleteVehicle(id);
+	}
+	
+	public boolean checkVehicleExists(
+	        String fileName,
+	        int id,
+	        String vehicleType) {
+
+
+	    try {
+
+	        BufferedReader br =
+	                new BufferedReader(new FileReader(fileName));
+
+
+	        String line;
+
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+
+	            if (Integer.parseInt(data[0]) == id
+	                    && data[1].equalsIgnoreCase(vehicleType)) {
+
+	                br.close();
+	                return true;
+	            }
+	        }
+
+
+	        br.close();
+
+
+	    } catch (IOException e) {
+
+	        return false;
+	    }
+
+
+	    return false;
+	}
+
+
+	
+	
+	
+	public boolean deleteVehicleFromFile(String fileName,int id) {
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+		    BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-			String line;
-			boolean found = false;
+		    FileWriter fw = new FileWriter("temp.txt");
 
-			while ((line = br.readLine()) != null) {
+		    PrintWriter pw = new PrintWriter(fw);
 
-				String[] data = line.split(",");
+		    String line;
+		    boolean deleted = false;
 
-				if (data[1].equalsIgnoreCase(vehicleType)) {
+		    while ((line = br.readLine()) != null) {
 
-					found = true;
+		        String[] data = line.split(",");
 
-					System.out.println("----------------------------------");
-					System.out.println("ID: " + data[0]);
-					System.out.println("Type: " + data[2]);
-					System.out.println("Model: " + data[3]);
-					System.out.println("Color: " + data[4]);
-					System.out.println("Plate Number: " + data[5]);
-					System.out.println("Year: " + data[6]);
-					System.out.println("Price: " + data[7]);
-					System.out.println("----------------------------------");
-				}
-			}
+		        if (Integer.parseInt(data[0]) != id) {
 
-			br.close();
+		            pw.println(line);
 
-			if (!found) {
+		        } else {
 
-				System.out.println("No " + vehicleType + " found.");
+		            deleted = true;
 
-				System.out.println("\nDo you want to choose another vehicle type?");
-				System.out.println("1- Yes");
-				System.out.println("2- No (Back)");
+		        }
 
-				int again = readInt();
+		    }
 
-				if (again == 1) {
-					admindelete();
-				} else {
-					showmenu();
-				}
+		    br.close();
+		    pw.close();
 
-				return;
-			}
+		    File oldFile = new File(fileName);
+		    File newFile = new File("temp.txt");
 
-			int id;
+		    oldFile.delete();
+		    newFile.renameTo(oldFile);
 
-			while (true) {
-
-				System.out.print("Enter Vehicle ID to delete: ");
-				id = readInt();
-
-				boolean exists = false;
-
-				BufferedReader check = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
-				String line2;
-
-				while ((line2 = check.readLine()) != null) {
-
-					String[] data = line2.split(",");
-
-					if (Integer.parseInt(data[0]) == id && data[1].equalsIgnoreCase(vehicleType)) {
-
-						exists = true;
-						break;
-					}
-				}
-
-				check.close();
-
-				if (exists) {
-					break;
-				}
-
-				System.out.println("Vehicle ID not found. Please enter a valid ID.");
-
-			}
-
-			deleteVehicle(id);
+		    return deleted;
 
 		} catch (IOException e) {
 
-			System.out.println("Error reading file.");
-
+		    return false;
 		}
-
 	}
-
+	
 	public void deleteVehicle(int id) {
 
-		try {
+	    boolean deleted = deleteVehicleFromFile("AddingVEHICLE.txt", id);
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+	    if (deleted)
+	        System.out.println("Vehicle deleted successfully.");
+	    else
+	        System.out.println("Vehicle ID not found.");
+	    
+	    System.out.println("\nDo you want to delete another vehicle?");
+	    System.out.println("1- Yes");
+	    System.out.println("2- No (Back)");
 
-			FileWriter fw = new FileWriter("temp.txt");
+	    while (true) {
 
-			PrintWriter pw = new PrintWriter(fw);
+	        int again = readInt();
 
-			String line;
-			boolean deleted = false;
+	        if (again == 1) {
+	            admindelete();
+	            return;
+	        }
 
-			while ((line = br.readLine()) != null) {
+	        else if (again == 2) {
+	            showmenu();
+	            return;
+	        }
 
-				String[] data = line.split(",");
-
-				if (Integer.parseInt(data[0]) != id) {
-
-					pw.println(line);
-
-				} else {
-
-					deleted = true;
-
-				}
-
-			}
-
-			br.close();
-			pw.close();
-
-			File oldFile = new File("AddingVEHICLE.txt");
-			File newFile = new File("temp.txt");
-
-			oldFile.delete();
-			newFile.renameTo(oldFile);
-
-			if (deleted)
-				System.out.println("Vehicle deleted successfully.");
-			else
-				System.out.println("Vehicle ID not found.");
-
-			System.out.println("\nDo you want to delete another vehicle?");
-			System.out.println("1- Yes");
-			System.out.println("2- No (Back)");
-
-			while (true) {
-
-				int again = readInt();
-
-				if (again == 1) {
-					admindelete();
-					return;
-				}
-
-				else if (again == 2) {
-					showmenu();
-					return;
-				}
-
-				else {
-					System.out.println("Invalid choice! Please enter 1 or 2.");
-				}
-
-			}
-
-		} catch (IOException e) {
-
-			System.out.println("Error deleting vehicle.");
-
-		}
-
+	        else {
+	            System.out.println("Invalid choice! Please enter 1 or 2.");
+	        }
+	    }
 	}
+	
+	
 
 	public String readPlateNumber() {
 		while (true) {

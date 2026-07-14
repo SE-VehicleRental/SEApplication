@@ -431,7 +431,7 @@ class CustomerProfileServiceTest {
 
         service.handleExistingCustomer(
                 input,
-                (licenses, id, name, phone) ->
+                (licenses, id, name, phone,email) ->
                         rentalCalled.set(true),
                 () -> backCalled.set(true)
         );
@@ -468,7 +468,7 @@ class CustomerProfileServiceTest {
 
         service.handleExistingCustomer(
                 input,
-                (licenses, id, name, phone) -> {
+                (licenses, id, name, phone,email) -> {
                     rentalCalled.set(true);
 
                     assertEquals(
@@ -514,7 +514,7 @@ class CustomerProfileServiceTest {
 
         service.handleExistingCustomer(
                 input,
-                (licenses, id, name, phone) -> {
+                (licenses, id, name, phone,email) -> {
                 },
                 () -> backCalled.set(true)
         );
@@ -545,7 +545,7 @@ class CustomerProfileServiceTest {
 
         service.handleExistingCustomer(
                 input,
-                (licenses, id, name, phone) -> {
+                (licenses, id, name, phone,email) -> {
                 },
                 () -> backCalled.set(true)
         );

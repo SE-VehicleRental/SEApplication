@@ -67,14 +67,14 @@ public class customerMenu {
 			}
 		}
 		if (rent.equalsIgnoreCase("yes")) {
-			rentVehicle(newCustomer.getLicenses(), newCustomer.getId(), newCustomer.getName(), newCustomer.getPhone());
+			rentVehicle(newCustomer.getLicenses(), newCustomer.getId(), newCustomer.getName(), newCustomer.getPhone(),newCustomer.getEmail());
 		} else {
 			Manager m = new Manager();
 			m.start();
 		}
 	}
 
-	private void rentVehicle(ArrayList<String> licenses, String customerId, String customerName, String customerPhone) {
+	private void rentVehicle(ArrayList<String> licenses, String customerId, String customerName, String customerPhone,String customerEmail) {
 		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
 		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
 		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense);
@@ -109,7 +109,7 @@ public class customerMenu {
 					System.out.println("Price per day: " + pricePerDay);
 					System.out.println("Rental period: " + days + " day(s)");
 					System.out.println("Total cost: " + totalCost);
-					createPromissoryNote(vehicle, customerId, customerName, customerPhone, startDate.toString(),
+					createPromissoryNote(vehicle, customerId, customerName, customerPhone,customerEmail, startDate.toString(),
 							endDate.toString(), days, totalCost);
 					return;
 				} catch (IllegalArgumentException e) {
@@ -121,11 +121,11 @@ public class customerMenu {
 	
 	
 
-	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,
+	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,String customerEmail,
 			String startDate, String endDate, long rentalDays, double totalCost) {
 		PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone, v[1], v[2], v[3],
 				v[7], startDate, endDate, String.valueOf(totalCost), () -> rentalFileService.saveRentalToFile(v,
-						customerId, customerName, customerPhone, startDate, endDate, rentalDays, totalCost));
+						customerId, customerName, customerPhone,  customerEmail, startDate, endDate, rentalDays, totalCost));
 		form.setVisible(true);
 	}
 	

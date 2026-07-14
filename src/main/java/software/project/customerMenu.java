@@ -6,14 +6,13 @@ import java.util.Scanner;
 
 public class customerMenu {
 	Scanner input = new Scanner(System.in);
-	private final CustomerValidator validator = new CustomerValidator();
 	private final RentalCalculator rentalCalculator = new RentalCalculator();
-	private final CustomerFileService customerFileService = new CustomerFileService();
 	private final RentalFileService rentalFileService = new RentalFileService();
 	private final VehicleFileService vehicleFileService = new VehicleFileService();
 	private final LicenseService licenseService = new LicenseService();
 	private final CustomerRegistrationService registrationService = new CustomerRegistrationService();
 	private final VehicleBrowsingService vehicleBrowsingService = new VehicleBrowsingService();
+	private final CustomerProfileService profileService = new CustomerProfileService();
 
 	public void showMenu() {
 		System.out.println("Customer System");
@@ -49,7 +48,10 @@ public class customerMenu {
 			}
 		}
 		if (choice == 2) {
-			handleExistingCustomer();
+			profileService.handleExistingCustomer(input, this::rentVehicle, () -> {
+				Manager manager = new Manager();
+				manager.start();
+			});
 			return;
 		}
 		CustomerData newCustomer = registrationService.registerCustomer(input);
@@ -113,111 +115,6 @@ public class customerMenu {
 				} catch (IllegalArgumentException e) {
 					System.out.println("Invalid date! " + e.getMessage());
 				}
-			}
-		}
-	}
-
-	private void handleExistingCustomer() {
-		System.out.print("Enter your ID: ");
-		String id = input.nextLine().trim();
-		CustomerData customer = customerFileService.getCustomerById(id);
-		if (customer == null) {
-			System.out.println("Customer not found!");
-			Manager m = new Manager();
-			m.start();
-			return;
-		}
-		while (true) {
-			System.out.println("\n=== CUSTOMER INFO ===");
-			System.out.println("ID: " + customer.getId());
-			System.out.println("Name: " + customer.getName());
-			System.out.println("Email: " + customer.getEmail());
-			System.out.println("Phone: " + customer.getPhone());
-			System.out.println("Payment: " + (customer.getPayment() == 1 ? "Cash" : "Visa"));
-			System.out.println("Licenses: " + customer.getLicenses());
-			rentalFileService.showCustomerRentals(customer.getId());
-			System.out.println("\n1- Rent a vehicle");
-			System.out.println("2- Edit my information");
-			System.out.println("3- Back to main menu");
-			System.out.print("Choose option: ");
-			int choice = readInt();
-			if (choice == 1) {
-				rentVehicle(customer.getLicenses(), customer.getId(), customer.getName(), customer.getPhone());
-				return;
-			} else if (choice == 2) {
-				editCustomerInfo(customer);
-			} else if (choice == 3) {
-				Manager m = new Manager();
-				m.start();
-				return;
-			} else {
-				System.out.println("Invalid choice!");
-			}
-		}
-	}
-
-	private void editCustomerInfo(CustomerData customer) {
-		while (true) {
-			System.out.println("\n=== EDIT CUSTOMER INFO ===");
-			System.out.println("1- Edit Email");
-			System.out.println("2- Edit Phone");
-			System.out.println("3- Edit Payment Method");
-			System.out.println("4- Edit Licenses");
-			System.out.println("5- Save changes and back");
-			System.out.print("Choose option: ");
-			int choice = readInt();
-			switch (choice) {
-			case 1:
-				while (true) {
-					System.out.print("Enter new email: ");
-					String newEmail = input.nextLine().trim();
-					if (validator.isValidEmail(newEmail)) {
-						customer.setEmail(newEmail);
-						System.out.println("Email updated successfully!");
-						break;
-					} else {
-						System.out.println("Invalid email format!");
-					}
-				}
-				break;
-			case 2:
-				while (true) {
-					System.out.print("Enter new phone number (10 digits): ");
-					String newPhone = input.nextLine().trim();
-					if (validator.isValidPhone(newPhone)) {
-						customer.setPhone(newPhone);
-						System.out.println("Phone updated successfully!");
-						break;
-					} else {
-						System.out.println("Invalid phone number!");
-					}
-				}
-				break;
-			case 3:
-				while (true) {
-					System.out.println("Choose payment method:");
-					System.out.println("1- Cash");
-					System.out.println("2- Visa");
-					int payment = readInt();
-					if (validator.isValidPayment(payment)) {
-						customer.setPayment(payment);
-						System.out.println("Payment updated successfully!");
-						break;
-					} else {
-						System.out.println("Invalid choice!");
-					}
-				}
-				break;
-			case 4:
-				customer.setLicenses(licenseService.chooseLicenses(input));
-				System.out.println("Licenses updated successfully!");
-				break;
-			case 5:
-				customerFileService.updateCustomer(customer);
-				System.out.println("Customer information updated successfully!");
-				return;
-			default:
-				System.out.println("Invalid choice!");
 			}
 		}
 	}

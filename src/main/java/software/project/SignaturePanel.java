@@ -41,17 +41,24 @@ public class SignaturePanel extends JPanel {
 	    addMouseMotionListener(new MouseAdapter() {
 	        @Override
 	        public void mouseDragged(MouseEvent e) {
-	            int currentX = e.getX();
-	            int currentY = e.getY();
-	            g2.drawLine(previousX, previousY, currentX, currentY);
-	            previousX = currentX;
-	            previousY = currentY;
-	            hasSignature = true; 
+	            drawSignature(e.getX(), e.getY());
 	            repaint();
 	        }
 	    });
 	}
 
+	void drawSignature(int currentX, int currentY) {
+	    g2.drawLine(previousX, previousY, currentX, currentY);
+	    previousX = currentX;
+	    previousY = currentY;
+	    hasSignature = true;
+	}
+
+	void setPreviousPoint(int x, int y) {
+	    previousX = x;
+	    previousY = y;
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);

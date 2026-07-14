@@ -8,140 +8,6 @@ public class adminmenu {
 
 	public int readInt() {
 
-<<<<<<< HEAD
-	        if (input.hasNextInt()) {
-	            return input.nextInt();
-	        } else {
-	            System.out.println("Invalid input! Please enter a number.");
-	            input.next();
-	        }
-
-	    }
-	}
-	
-<<<<<<< HEAD
-	protected String readType() {
-
-=======
-	public  String readType() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	    while (true) {
-	        System.out.print("Enter type: ");
-	        String type = input.next();
-
-	        if (type.matches("[A-Za-z ]+")) {
-	            return type;
-	        }
-
-	        System.out.println("Invalid type! Please enter letters only.");
-	    }
-	}
-	
-<<<<<<< HEAD
-	protected String readModel() {
-
-=======
-	
-	
-	public  String readModel() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	    while (true) {
-	        System.out.print("Enter model: ");
-	        String model = input.next();
-
-	        if (model.matches("[A-Za-z0-9]+")) {
-	            return model;
-	        }
-	        System.out.println("Invalid model!");
-	    }
-	}
-	
-<<<<<<< HEAD
-	protected String readColor() {
-
-=======
-	
-	
-	public  String readColor() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	    while (true) {
-
-	        System.out.print("Enter color: ");
-	        String color = input.next();
-
-	        if (color.matches("[A-Za-z]+")) {
-	            return color;
-	        }
-	        System.out.println("Invalid color! Please enter letters only.");
-	    }
-	}
-	
-<<<<<<< HEAD
-	protected int readYear() {
-=======
-	
-	
-	public  int readYear() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-
-	    while (true) {
-
-	        System.out.print("Enter year: ");
-
-	        if (input.hasNextInt()) {
-
-	            int year = input.nextInt();
-
-	            if (year >= 1950 && year <= 2026) {
-	                return year;
-	            }
-
-	            System.out.println("Invalid year!");
-
-	        } else {
-
-	            System.out.println("Year must be a number.");
-	            input.next();
-
-	        }
-
-	    }
-	}
-	
-<<<<<<< HEAD
-	protected double readPrice() {
-=======
-	public  double readPrice() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-
-	    while (true) {
-
-	        System.out.print("Enter price per day: ");
-
-	        if (input.hasNextDouble()) {
-
-	            double price = input.nextDouble();
-
-	            if (price > 0) {
-	                return price;
-	            }
-
-	            System.out.println("Price must be greater than zero.");
-
-	        } else {
-
-	            System.out.println("Price must be a number.");
-	            input.next();
-
-	        }
-
-	    }
-	}
-	
-	
-	public  void showmenu() {
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 		while (true) {
 
 			if (input.hasNextInt()) {
@@ -151,28 +17,7 @@ public class adminmenu {
 				input.next();
 			}
 
-<<<<<<< HEAD
-        case 2:
-            admindelete();
-            return;
-
-        case 3:
-            adminedit();
-            return;
-            
-        case 4:
-        	Manager m=new Manager();
-        	m.start();
-            return;
-            
-
-        default:
-            System.out.println("Invalid choice! Please enter a number between 1 and 4.");
-    }                                        
-        }
-=======
 		}
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	}
 
 	public String readType() {
@@ -180,24 +25,9 @@ public class adminmenu {
 			System.out.print("Enter type: ");
 			String type = input.next();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	protected void adminadd() {
-=======
-	public  void adminadd() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	    while (true) {
-	        System.out.println("ADD VEHICLE");
-	        System.out.println("1-Car");
-	        System.out.println("2-Motorcycle");
-	        System.out.println("3-Truck");
-	        System.out.println("4-Bus");
-	        System.out.println("5-Back");
-=======
 			if (type.matches("[A-Za-z ]+")) {
 				return type;
 			}
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 			System.out.println("Invalid type! Please enter letters only.");
 		}
@@ -246,21 +76,6 @@ public class adminmenu {
 
 			} else {
 
-<<<<<<< HEAD
-	            else {
-	                System.out.println("Invalid choice! Please enter 1 or 2.");
-	            }
-	        } 
-	        }
-	    }
-	
-	
-<<<<<<< HEAD
-	protected void enterVehicleData(String vehicleType) {
-=======
-	public  void enterVehicleData(String vehicleType) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
 				System.out.println("Year must be a number.");
 				input.next();
 
@@ -386,7 +201,6 @@ public class adminmenu {
 	}
 
 	public void enterVehicleData(String vehicleType) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 		System.out.println("=== Add " + vehicleType + " ===");
 
@@ -401,16 +215,6 @@ public class adminmenu {
 
 		System.out.println(vehicleType + " added successfully!");
 	}
-<<<<<<< HEAD
-	
-	
-<<<<<<< HEAD
-	public int generateVehicleID() {
-=======
-	public  int generateVehicleID() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	public int generateVehicleID() {
 
@@ -440,17 +244,8 @@ public class adminmenu {
 		return lastID + 1;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	protected void saveVehicle(String vehicleType, String type, String model,
-=======
-	public  void saveVehicle(String vehicleType, String type, String model,
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	        String color, int year, String plateNumber, double price) {
-=======
 	public void saveVehicle(String vehicleType, String type, String model, String color, int year, String plateNumber,
 			double price) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 		try {
 			int id = generateVehicleID();
@@ -464,17 +259,10 @@ public class adminmenu {
 			System.out.println("Error saving file: " + e.getMessage());
 		}
 	}
-<<<<<<< HEAD
-	
-	
-<<<<<<< HEAD
-	protected void admindelete() {
-=======
-	public  void admindelete() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
+	
+
+	
 	public void admindelete() {
 
 		System.out.println("DELETE VEHICLE");
@@ -517,15 +305,6 @@ public class adminmenu {
 		displayVehicles(vehicleType);
 
 	}
-<<<<<<< HEAD
-	
-<<<<<<< HEAD
-	protected void adminedit() {
-=======
-	public  void adminedit() {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 	public void adminedit() {
 
@@ -573,16 +352,9 @@ public class adminmenu {
 			return;
 		}
 	}
-<<<<<<< HEAD
-	
-<<<<<<< HEAD
-	protected void displayVehiclesForEdit(String vehicleType) {
-=======
-	public  void displayVehiclesForEdit(String vehicleType) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
+	
+	
 	public void displayVehiclesForEdit(String vehicleType) {
 
 		try {
@@ -678,370 +450,407 @@ public class adminmenu {
 		}
 
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	protected void editVehicle(int id) {
-=======
-	public  void editVehicle(int id) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
 
-	public void editVehicle(int id) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
+	public boolean editVehicleFromFile(String fileName, int id, int choice, String newValue) {
 
-		System.out.println("\nWhat do you want to edit?");
-		System.out.println("1-Type");
-		System.out.println("2-Model");
-		System.out.println("3-Color");
-		System.out.println("4-Year");
-		System.out.println("5-Price");
+	    try {
 
-		int choice;
+	        BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-		while (true) {
+	        FileWriter fw = new FileWriter("temp.txt");
+	        PrintWriter pw = new PrintWriter(fw);
 
-			choice = readInt();
+	        String line;
+	        boolean edited = false;
 
-			if (choice >= 1 && choice <= 5) {
-				break;
-			}
 
-			System.out.println("Invalid choice! Please enter a number between 1 and 5.");
-		}
+	        while ((line = br.readLine()) != null) {
 
-		String newValue = "";
+	            String[] data = line.split(",");
 
-		switch (choice) {
 
-		case 1:
-			newValue = readType();
-			break;
+	            if (Integer.parseInt(data[0]) == id) {
 
-		case 2:
-			newValue = readModel();
-			break;
 
-		case 3:
-			newValue = readColor();
-			break;
+	                switch (choice) {
 
-		case 4:
-			newValue = String.valueOf(readYear());
-			break;
+	                case 1:
+	                    data[2] = newValue;
+	                    break;
 
-		case 5:
-			newValue = String.valueOf(readPrice());
-			break;
+	                case 2:
+	                    data[3] = newValue;
+	                    break;
 
-		}
+	                case 3:
+	                    data[4] = newValue;
+	                    break;
 
-		try {
+	                case 4:
+	                    data[5] = newValue;
+	                    break;
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+	                case 5:
+	                    data[6] = newValue;
+	                    break;
 
-			FileWriter fw = new FileWriter("temp.txt");
-			PrintWriter pw = new PrintWriter(fw);
+	                default:
+	                    br.close();
+	                    pw.close();
+	                    return false;
+	                }
 
-			String line;
-			boolean edited = false;
 
-			while ((line = br.readLine()) != null) {
+	                edited = true;
+	            }
 
-				String[] data = line.split(",");
 
-				if (Integer.parseInt(data[0]) == id) {
+	            pw.println(String.join(",", data));
+	        }
 
-					switch (choice) {
 
-					case 1:
-						data[2] = newValue;
-						break;
+	        br.close();
+	        pw.close();
 
-					case 2:
-						data[3] = newValue;
-						break;
 
-					case 3:
-						data[4] = newValue;
-						break;
+	        File oldFile = new File(fileName);
+	        File newFile = new File("temp.txt");
 
-					case 4:
-						data[5] = newValue;
-						break;
 
-					case 5:
-						data[6] = newValue;
-						break;
+	        oldFile.delete();
+	        newFile.renameTo(oldFile);
 
-					default:
-						System.out.println("Invalid choice.");
-						br.close();
-						pw.close();
-						return;
-					}
 
-					edited = true;
-				}
+	        return edited;
 
-				pw.println(String.join(",", data));
 
-			}
+	    } catch (IOException e) {
 
-			br.close();
-			pw.close();
-
-			File oldFile = new File("AddingVEHICLE.txt");
-			File newFile = new File("temp.txt");
-
-			oldFile.delete();
-			newFile.renameTo(oldFile);
-
-			if (edited)
-				System.out.println("Vehicle updated successfully.");
-			else
-				System.out.println("Vehicle ID not found.");
-
-			System.out.println("\nDo you want to edit another vehicle?");
-			System.out.println("1- Yes");
-			System.out.println("2- No (Back)");
-
-			int again;
-
-			while (true) {
-
-				again = readInt();
-
-				if (again == 1) {
-					adminedit();
-					return;
-				}
-
-				else if (again == 2) {
-					showmenu();
-					return;
-				}
-
-				else {
-					System.out.println("Invalid choice! Please enter 1 or 2.");
-				}
-
-			}
-
-		} catch (IOException e) {
-
-			System.out.println("Error editing vehicle.");
-
-		}
-
+	        return false;
+	    }
 	}
-<<<<<<< HEAD
 	
 	
-<<<<<<< HEAD
-	protected void displayVehicles(String vehicleType) {
-=======
-	public  void displayVehicles(String vehicleType) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
+	public void editVehicle(int id) {
 
+	    System.out.println("\nWhat do you want to edit?");
+	    System.out.println("1-Type");
+	    System.out.println("2-Model");
+	    System.out.println("3-Color");
+	    System.out.println("4-Year");
+	    System.out.println("5-Price");
+
+	    int choice;
+
+	    while (true) {
+
+	        choice = readInt();
+
+	        if (choice >= 1 && choice <= 5) {
+	            break;
+	        }
+
+	        System.out.println("Invalid choice! Please enter a number between 1 and 5.");
+	    }
+
+
+	    String newValue = "";
+
+	    switch (choice) {
+
+	    case 1:
+	        newValue = readType();
+	        break;
+
+	    case 2:
+	        newValue = readModel();
+	        break;
+
+	    case 3:
+	        newValue = readColor();
+	        break;
+
+	    case 4:
+	        newValue = String.valueOf(readYear());
+	        break;
+
+	    case 5:
+	        newValue = String.valueOf(readPrice());
+	        break;
+	    }
+
+
+	    boolean edited = editVehicleFromFile(
+	            "AddingVEHICLE.txt",
+	            id,
+	            choice,
+	            newValue
+	    );
+
+
+	    if (edited)
+	        System.out.println("Vehicle updated successfully.");
+	    else
+	        System.out.println("Vehicle ID not found.");
+
+
+	    System.out.println("\nDo you want to edit another vehicle?");
+	    System.out.println("1- Yes");
+	    System.out.println("2- No (Back)");
+
+	    while (true) {
+
+	        int again = readInt();
+
+	        if (again == 1) {
+	            adminedit();
+	            return;
+	        }
+
+	        else if (again == 2) {
+	            showmenu();
+	            return;
+	        }
+
+	        else {
+	            System.out.println("Invalid choice! Please enter 1 or 2.");
+	        }
+	    }
+	}
+	
+	
+	public boolean displayVehiclesFromFile(String fileName, String vehicleType) {
+
+	    boolean found = false;
+
+	    try {
+
+	        BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+	        String line;
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+
+	            if (data[1].equalsIgnoreCase(vehicleType)) {
+
+	                found = true;
+
+	                System.out.println("----------------------------------");
+	                System.out.println("ID: " + data[0]);
+	                System.out.println("Type: " + data[2]);
+	                System.out.println("Model: " + data[3]);
+	                System.out.println("Color: " + data[4]);
+	                System.out.println("Plate Number: " + data[5]);
+	                System.out.println("Year: " + data[6]);
+	                System.out.println("Price: " + data[7]);
+	                System.out.println("----------------------------------");
+	            }
+	        }
+
+
+	        br.close();
+
+	        return found;
+
+
+	    } catch (IOException e) {
+
+	        return false;
+	    }
+	}
+	
+	
+	
 	public void displayVehicles(String vehicleType) {
 
+
+	    boolean found = displayVehiclesFromFile(
+	            "AddingVEHICLE.txt",
+	            vehicleType
+	    );
+
+
+	    if (!found) {
+
+	        System.out.println("No " + vehicleType + " found.");
+
+	        System.out.println("\nDo you want to choose another vehicle type?");
+	        System.out.println("1- Yes");
+	        System.out.println("2- No (Back)");
+
+	        int again = readInt();
+
+	        if (again == 1) {
+	            admindelete();
+	        } else {
+	            showmenu();
+	        }
+
+	        return;
+	    }
+
+
+	    int id;
+
+	    while (true) {
+
+	        System.out.print("Enter Vehicle ID to delete: ");
+	        id = readInt();
+
+	        boolean exists = checkVehicleExists(
+	                "AddingVEHICLE.txt",
+	                id,
+	                vehicleType
+	        );
+
+
+	        if (exists) {
+	            break;
+	        }
+
+
+	        System.out.println(
+	            "Vehicle ID not found. Please enter a valid ID."
+	        );
+
+	    }
+
+
+	    deleteVehicle(id);
+	}
+	
+	public boolean checkVehicleExists(
+	        String fileName,
+	        int id,
+	        String vehicleType) {
+
+
+	    try {
+
+	        BufferedReader br =
+	                new BufferedReader(new FileReader(fileName));
+
+
+	        String line;
+
+
+	        while ((line = br.readLine()) != null) {
+
+	            String[] data = line.split(",");
+
+
+	            if (Integer.parseInt(data[0]) == id
+	                    && data[1].equalsIgnoreCase(vehicleType)) {
+
+	                br.close();
+	                return true;
+	            }
+	        }
+
+
+	        br.close();
+
+
+	    } catch (IOException e) {
+
+	        return false;
+	    }
+
+
+	    return false;
+	}
+
+
+	
+	
+	
+	public boolean deleteVehicleFromFile(String fileName,int id) {
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+		    BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-			String line;
-			boolean found = false;
+		    FileWriter fw = new FileWriter("temp.txt");
 
-			while ((line = br.readLine()) != null) {
+		    PrintWriter pw = new PrintWriter(fw);
 
-				String[] data = line.split(",");
+		    String line;
+		    boolean deleted = false;
 
-				if (data[1].equalsIgnoreCase(vehicleType)) {
+		    while ((line = br.readLine()) != null) {
 
-					found = true;
+		        String[] data = line.split(",");
 
-					System.out.println("----------------------------------");
-					System.out.println("ID: " + data[0]);
-					System.out.println("Type: " + data[2]);
-					System.out.println("Model: " + data[3]);
-					System.out.println("Color: " + data[4]);
-					System.out.println("Plate Number: " + data[5]);
-					System.out.println("Year: " + data[6]);
-					System.out.println("Price: " + data[7]);
-					System.out.println("----------------------------------");
-				}
-			}
+		        if (Integer.parseInt(data[0]) != id) {
 
-			br.close();
+		            pw.println(line);
 
-			if (!found) {
+		        } else {
 
-				System.out.println("No " + vehicleType + " found.");
+		            deleted = true;
 
-				System.out.println("\nDo you want to choose another vehicle type?");
-				System.out.println("1- Yes");
-				System.out.println("2- No (Back)");
+		        }
 
-				int again = readInt();
+		    }
 
-				if (again == 1) {
-					admindelete();
-				} else {
-					showmenu();
-				}
+		    br.close();
+		    pw.close();
 
-				return;
-			}
+		    File oldFile = new File(fileName);
+		    File newFile = new File("temp.txt");
 
-			int id;
+		    oldFile.delete();
+		    newFile.renameTo(oldFile);
 
-			while (true) {
-
-				System.out.print("Enter Vehicle ID to delete: ");
-				id = readInt();
-
-				boolean exists = false;
-
-				BufferedReader check = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
-				String line2;
-
-				while ((line2 = check.readLine()) != null) {
-
-					String[] data = line2.split(",");
-
-					if (Integer.parseInt(data[0]) == id && data[1].equalsIgnoreCase(vehicleType)) {
-
-						exists = true;
-						break;
-					}
-				}
-
-				check.close();
-
-				if (exists) {
-					break;
-				}
-
-				System.out.println("Vehicle ID not found. Please enter a valid ID.");
-
-			}
-
-			deleteVehicle(id);
+		    return deleted;
 
 		} catch (IOException e) {
 
-			System.out.println("Error reading file.");
-
+		    return false;
 		}
-
 	}
-<<<<<<< HEAD
 	
-<<<<<<< HEAD
-	protected void deleteVehicle(int id) {
-=======
-	public  void deleteVehicle(int id) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-=======
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-
 	public void deleteVehicle(int id) {
 
-		try {
+	    boolean deleted = deleteVehicleFromFile("AddingVEHICLE.txt", id);
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
+	    if (deleted)
+	        System.out.println("Vehicle deleted successfully.");
+	    else
+	        System.out.println("Vehicle ID not found.");
+	    
+	    System.out.println("\nDo you want to delete another vehicle?");
+	    System.out.println("1- Yes");
+	    System.out.println("2- No (Back)");
 
-			FileWriter fw = new FileWriter("temp.txt");
-
-			PrintWriter pw = new PrintWriter(fw);
-
-			String line;
-			boolean deleted = false;
-
-			while ((line = br.readLine()) != null) {
-
-				String[] data = line.split(",");
-
-				if (Integer.parseInt(data[0]) != id) {
-
-					pw.println(line);
-
-				} else {
-
-					deleted = true;
-
-				}
-
-			}
-
-			br.close();
-			pw.close();
-
-			File oldFile = new File("AddingVEHICLE.txt");
-			File newFile = new File("temp.txt");
-
-			oldFile.delete();
-			newFile.renameTo(oldFile);
-
-			if (deleted)
-				System.out.println("Vehicle deleted successfully.");
-			else
-				System.out.println("Vehicle ID not found.");
-
-			System.out.println("\nDo you want to delete another vehicle?");
-			System.out.println("1- Yes");
-			System.out.println("2- No (Back)");
-
-			while (true) {
-
-				int again = readInt();
-
-				if (again == 1) {
-					admindelete();
-					return;
-				}
-
-				else if (again == 2) {
-					showmenu();
-					return;
-				}
-
-				else {
-					System.out.println("Invalid choice! Please enter 1 or 2.");
-				}
-
-			}
-
-		} catch (IOException e) {
-
-			System.out.println("Error deleting vehicle.");
-
-		}
-
-	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	protected String readPlateNumber() {
-
-=======
-	
-=======
-
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
-	public String readPlateNumber() {
-<<<<<<< HEAD
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	    while (true) {
-	        System.out.print("Enter plate number (6 digits): ");
-	        String plate = input.next();
-=======
+
+	        int again = readInt();
+
+	        if (again == 1) {
+	            admindelete();
+	            return;
+	        }
+
+	        else if (again == 2) {
+	            showmenu();
+	            return;
+	        }
+
+	        else {
+	            System.out.println("Invalid choice! Please enter 1 or 2.");
+	        }
+	    }
+	}
+	
+	
+
+	public String readPlateNumber() {
 		while (true) {
 			System.out.print("Enter plate number (6 digits): ");
 			String plate = input.next();
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 			if (!plate.matches("\\d{6}")) {
 				System.out.println("Invalid plate number! Must be exactly 6 digits.");
@@ -1054,21 +863,12 @@ public class adminmenu {
 			return plate;
 		}
 	}
-<<<<<<< HEAD
-	
-<<<<<<< HEAD
-	protected boolean plateExists(String plateNumber) {
-=======
-	
-=======
 
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 	public boolean isValidPlateNumber(String plate) {
 		return plate.matches("\\d{6}");
 	}
 
 	public boolean plateExists(String plateNumber) {
->>>>>>> branch 'master' of https://github.com/Hala-Sleibe/SEApplication.git
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));

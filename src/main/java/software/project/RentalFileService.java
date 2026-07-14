@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 /**
  * Provides services for managing rental records stored in a text file.
  * This class allows checking vehicle availability, displaying customer
@@ -166,6 +168,7 @@ public class RentalFileService {
             String customerId,
             String customerName,
             String customerPhone,
+            String customerEmail,
             String startDate,
             String endDate,
             long rentalDays,
@@ -182,6 +185,10 @@ public class RentalFileService {
             );
             writer.write(
                     "CustomerPhone: " + customerPhone + "\n"
+            );
+            
+            writer.write(
+                    "CustomerEmail: " + customerEmail + "\n"
             );
 
             writer.write(
@@ -226,6 +233,22 @@ public class RentalFileService {
             System.out.println(
                     "Rental saved successfully!"
             );
+            Dotenv dotenv = Dotenv.load();
+
+            EmailService emailService =
+                    new EmailService(
+                            dotenv.get("EMAIL_USERNAME"),
+                            dotenv.get("EMAIL_PASSWORD")
+                    );
+
+            RentalNotificationProcessor processor =
+                    new RentalNotificationProcessor(emailService);
+
+            processor.sendRentalConfirmation(
+                    customerEmail,
+                    customerName,
+                    vehicle[2]
+            );
 
         } catch (IOException e) {
             System.out.println(
@@ -233,4 +256,5 @@ public class RentalFileService {
             );
         }
     }
+ 
 }

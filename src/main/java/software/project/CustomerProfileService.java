@@ -66,7 +66,8 @@ public class CustomerProfileService {
                         customer.getLicenses(),
                         customer.getId(),
                         customer.getName(),
-                        customer.getPhone()
+                        customer.getPhone(),
+                        customer.getEmail()
                 );
                 return;
 
@@ -240,7 +241,8 @@ public class CustomerProfileService {
                 java.util.ArrayList<String> licenses,
                 String customerId,
                 String customerName,
-                String customerPhone
+                String customerPhone,
+                String customerEmail
         );
     }
 }

@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.time.LocalDate;
 public class VehicleFileService {
 
     private final String vehiclesFile;
@@ -23,6 +23,47 @@ public class VehicleFileService {
     }
 
     public ArrayList<String[]> getAvailableVehiclesByType(
+            String vehicleType,
+            LocalDate startDate,
+            LocalDate endDate) {
+
+        ArrayList<String[]> vehicles = new ArrayList<>();
+
+        try (BufferedReader reader =
+                     new BufferedReader(new FileReader(vehiclesFile))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                if (data.length < 8) {
+                    continue;
+                }
+
+                if (!data[1].equalsIgnoreCase(vehicleType)) {
+                    continue;
+                }
+
+                int vehicleId = Integer.parseInt(data[0]);
+
+                if (rentalFileService.isVehicleAvailable(
+                        vehicleId,
+                        startDate,
+                        endDate)) {
+
+                    vehicles.add(data);
+                }
+            }
+
+        } catch (IOException e) {
+            return vehicles;
+        }
+
+        return vehicles;
+    }
+    
+    public ArrayList<String[]> getAvailableVehiclesByType(
             String vehicleType) {
 
         ArrayList<String[]> vehicles = new ArrayList<>();
@@ -33,6 +74,7 @@ public class VehicleFileService {
             String line;
 
             while ((line = reader.readLine()) != null) {
+
                 String[] data = line.split(",");
 
                 if (data.length < 8) {

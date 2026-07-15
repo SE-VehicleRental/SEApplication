@@ -76,13 +76,46 @@ public class customerMenu {
 
 	private void rentVehicle(ArrayList<String> licenses, String customerId, String customerName, String customerPhone,String customerEmail) {
 		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
+		LocalDate startDate;
+		LocalDate endDate;
+
+		while (true) {
+
+		    try {
+
+		        System.out.print("Enter rental start date (yyyy-mm-dd): ");
+		        startDate = LocalDate.parse(input.nextLine().trim());
+
+		        System.out.print("Enter rental end date (yyyy-mm-dd): ");
+		        endDate = LocalDate.parse(input.nextLine().trim());
+
+		        rentalCalculator.calculateRentalDays(startDate, endDate);
+
+		        break;
+
+		    } catch (IllegalArgumentException e) {
+
+		        System.out.println("Invalid date! " + e.getMessage());
+		    }
+		}
+
 		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
-		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense);
+
+		ArrayList<String[]> vehicles =
+		        vehicleFileService.getAvailableVehiclesByType(
+		                chosenLicense,
+		                startDate,
+		                endDate);
+
 		if (vehicles.isEmpty()) {
-			System.out.println("No available vehicles for this license.");
-			Manager manager = new Manager();
-			manager.start();
-			return;
+
+		    System.out.println(
+		            "No vehicles are available during the selected period."
+		    );
+
+		    Manager manager = new Manager();
+		    manager.start();
+		    return;
 		}
 		vehicleBrowsingService.displayVehicles(vehicles);
 		while (true) {
@@ -94,28 +127,29 @@ public class customerMenu {
 				continue;
 			}
 			double pricePerDay = Double.parseDouble(vehicle[7]);
-			LocalDate startDate;
-			LocalDate endDate;
-			while (true) {
-				try {
-					System.out.print("Enter rental start date (yyyy-mm-dd): ");
-					startDate = LocalDate.parse(input.nextLine().trim());
-					System.out.print("Enter rental end date (yyyy-mm-dd): ");
-					endDate = LocalDate.parse(input.nextLine().trim());
-					long days = rentalCalculator.calculateRentalDays(startDate, endDate);
-					double totalCost = rentalCalculator.calculateTotalCost(days, pricePerDay);
-					System.out.println("\n=== RENTAL DETAILS ===");
-					System.out.println("Vehicle: " + vehicle[2] + " - Plate: " + vehicle[3]);
-					System.out.println("Price per day: " + pricePerDay);
-					System.out.println("Rental period: " + days + " day(s)");
-					System.out.println("Total cost: " + totalCost);
-					createPromissoryNote(vehicle, customerId, customerName, customerPhone,customerEmail, startDate.toString(),
-							endDate.toString(), days, totalCost);
-					return;
-				} catch (IllegalArgumentException e) {
-					System.out.println("Invalid date! " + e.getMessage());
-				}
-			}
+			long days = rentalCalculator.calculateRentalDays(startDate, endDate);
+
+			double totalCost =
+			        rentalCalculator.calculateTotalCost(days, pricePerDay);
+
+			System.out.println("\n=== RENTAL DETAILS ===");
+			System.out.println("Vehicle: " + vehicle[2] + " - Plate: " + vehicle[3]);
+			System.out.println("Price per day: " + pricePerDay);
+			System.out.println("Rental period: " + days + " day(s)");
+			System.out.println("Total cost: " + totalCost);
+
+			createPromissoryNote(
+			        vehicle,
+			        customerId,
+			        customerName,
+			        customerPhone,
+			        customerEmail,
+			        startDate.toString(),
+			        endDate.toString(),
+			        days,
+			        totalCost);
+
+			return;
 		}
 	}
 	

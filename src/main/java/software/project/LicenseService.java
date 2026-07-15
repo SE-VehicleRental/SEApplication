@@ -18,19 +18,33 @@ public class LicenseService {
         ArrayList<String> selected = new ArrayList<>();
 
         while (true) {
+
             System.out.println("License types:");
 
             for (int i = 0; i < available.size(); i++) {
-                System.out.println(
-                        (i + 1) + "- " + available.get(i)
-                );
+                System.out.println((i + 1) + "- " + available.get(i));
             }
 
-            int choice = input.nextInt();
+            int choice;
 
-            if (choice < 1 || choice > available.size()) {
-                System.out.println("Invalid license!");
-                continue;
+            while (true) {
+
+                String value = input.nextLine().trim();
+
+                try {
+
+                    choice = Integer.parseInt(value);
+
+                    if (choice >= 1 && choice <= available.size()) {
+                        break;
+                    }
+
+                    System.out.println("Invalid license!");
+
+                } catch (NumberFormatException e) {
+
+                    System.out.println("Invalid input! Please enter a number.");
+                }
             }
 
             String picked = available.remove(choice - 1);
@@ -43,11 +57,10 @@ public class LicenseService {
             String answer;
 
             while (true) {
-                System.out.print(
-                        "Do you have another license? (yes/no): "
-                );
 
-                answer = input.next();
+                System.out.print("Do you have another license? (yes/no): ");
+
+                answer = input.nextLine().trim();
 
                 if (answer.equalsIgnoreCase("yes")
                         || answer.equalsIgnoreCase("no")) {
@@ -88,13 +101,23 @@ public class LicenseService {
         }
 
         while (true) {
-            int choice = input.nextInt();
 
-            if (choice >= 1 && choice <= licenses.size()) {
-                return licenses.get(choice - 1);
+            String value = input.nextLine().trim();
+
+            try {
+
+                int choice = Integer.parseInt(value);
+
+                if (choice >= 1 && choice <= licenses.size()) {
+                    return licenses.get(choice - 1);
+                }
+
+                System.out.println("Invalid choice! Try again.");
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Invalid input! Please enter a number.");
             }
-
-            System.out.println("Invalid choice! Try again.");
         }
     }
 }

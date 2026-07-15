@@ -89,6 +89,80 @@ public class RentalFileService {
 
         return false;
     }
+    
+    
+    /**
+     * Checks whether a vehicle is available for the requested rental period.
+     * The vehicle is considered unavailable if its existing rental period
+     * overlaps with the requested start and end dates.
+     *
+     * @param vehicleId The ID of the vehicle to check.
+     * @param requestedStart The requested rental start date.
+     * @param requestedEnd The requested rental end date.
+     * @return true if the vehicle is available for the requested period,
+     *         otherwise false.
+     */
+    
+    public boolean isVehicleAvailable(
+            int vehicleId,
+            LocalDate requestedStart,
+            LocalDate requestedEnd) {
+
+        try (BufferedReader br =
+                     new BufferedReader(new FileReader(rentalsFile))) {
+
+            String line;
+            boolean vehicleFound = false;
+            LocalDate rentalStart = null;
+            LocalDate rentalEnd = null;
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.startsWith("VehicleID: ")) {
+
+                    int rentedId =
+                            Integer.parseInt(line.substring(11).trim());
+
+                    vehicleFound = (rentedId == vehicleId);
+                    rentalStart = null;
+                    rentalEnd = null;
+                }
+
+                if (vehicleFound
+                        && line.startsWith("RentalStartDate: ")) {
+
+                    rentalStart =
+                            LocalDate.parse(line.substring(17).trim());
+                }
+
+                if (vehicleFound
+                        && line.startsWith("RentalEndDate: ")) {
+
+                    rentalEnd =
+                            LocalDate.parse(line.substring(15).trim());
+                }
+
+                if (vehicleFound
+                        && rentalStart != null
+                        && rentalEnd != null) {
+
+                    if (!(requestedEnd.isBefore(rentalStart)
+                            || requestedStart.isAfter(rentalEnd))) {
+
+                        return false;
+                    }
+
+                    vehicleFound = false;
+                }
+            }
+
+        } catch (IOException e) {
+            return true;
+        }
+
+        return true;
+    }
+    
 
     /**
      * Checks whether a vehicle is currently rented.

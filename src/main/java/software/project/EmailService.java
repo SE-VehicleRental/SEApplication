@@ -28,7 +28,7 @@ public class EmailService {
         
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // e.g., Gmail SMTP
+        props.put("mail.smtp.host", "smtp.gmail.com"); 
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props, new Authenticator() {
@@ -70,7 +70,7 @@ public class EmailService {
         String body = "Dear user, Your Appointment is comming soon. Best regards";
        
         
-    	emailService.sendEmail("s12323849@stu.najah.edu", subject, body);
+    	emailService.sendEmail("s12324450@stu.najah.edu", subject, body);
     
     	
     }

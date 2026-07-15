@@ -44,15 +44,10 @@ public class RentalNotificationProcessor {
             String email,
             String customerName,
             String endDate) {
-
-
+   
         LocalDate today = LocalDate.now();
-
-
         LocalDate rentalEndDate =
                 LocalDate.parse(endDate);
-
-
 
         long daysLeft =
                 ChronoUnit.DAYS.between(
@@ -61,14 +56,9 @@ public class RentalNotificationProcessor {
                 );
 
 
-
-
         if(daysLeft == 2) {
-
-
             String subject =
                     "Rental Ending Soon";
-
 
             String body =
                     "Dear " + customerName + ",\n\n" +
@@ -83,11 +73,7 @@ public class RentalNotificationProcessor {
                     body
             );
 
-
         }
-
-
-
 
         else if(daysLeft == 0) {
 

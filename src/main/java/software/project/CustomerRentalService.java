@@ -31,7 +31,7 @@ public class CustomerRentalService {
 	}
 
 	public void rentVehicle(Scanner input, ArrayList<String> licenses, String customerId, String customerName,
-			String customerPhone, Runnable backToMainAction) {
+			String customerPhone, String customerEmail, Runnable backToMainAction) {
 
 		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
 
@@ -81,8 +81,8 @@ public class CustomerRentalService {
 					System.out.println("Rental period: " + rentalDays + " day(s)");
 					System.out.println("Total cost: " + totalCost);
 
-					createPromissoryNote(vehicle, customerId, customerName, customerPhone, startDate.toString(),
-							endDate.toString(), rentalDays, totalCost);
+					createPromissoryNote(vehicle, customerId, customerName, customerPhone, customerEmail,
+							startDate.toString(), endDate.toString(), rentalDays, totalCost);
 
 					return;
 
@@ -94,18 +94,18 @@ public class CustomerRentalService {
 	}
 
 	private void createPromissoryNote(String[] vehicle, String customerId, String customerName, String customerPhone,
-			String startDate, String endDate, long rentalDays, double totalCost) {
+			String customerEmail, String startDate, String endDate, long rentalDays, double totalCost) {
 
 		if (confirmationAction != null) {
-			confirmationAction.show(vehicle, customerId, customerName, customerPhone, startDate, endDate, rentalDays,
-					totalCost);
+			confirmationAction.show(vehicle, customerId, customerName, customerPhone, customerEmail, startDate, endDate,
+					rentalDays, totalCost);
 			return;
 		}
 
 		PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone, vehicle[1],
 				vehicle[2], vehicle[3], vehicle[7], startDate, endDate, String.valueOf(totalCost),
-				() -> rentalFileService.saveRentalToFile(vehicle, customerId, customerName, customerPhone, startDate,
-						endDate, rentalDays, totalCost));
+				() -> rentalFileService.saveRentalToFile(vehicle, customerId, customerName, customerPhone,
+						customerEmail, startDate, endDate, rentalDays, totalCost));
 
 		form.setVisible(true);
 	}
@@ -127,7 +127,7 @@ public class CustomerRentalService {
 	@FunctionalInterface
 	interface RentalConfirmationAction {
 
-		void show(String[] vehicle, String customerId, String customerName, String customerPhone, String startDate,
-				String endDate, long rentalDays, double totalCost);
+		void show(String[] vehicle, String customerId, String customerName, String customerPhone, String customerEmail,
+				String startDate, String endDate, long rentalDays, double totalCost);
 	}
 }

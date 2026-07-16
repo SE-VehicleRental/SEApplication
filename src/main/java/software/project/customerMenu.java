@@ -44,8 +44,8 @@ public class customerMenu {
 		}
 		if (choice == 2) {
 			profileService.handleExistingCustomer(input,
-					(licenses, customerId, customerName, customerPhone) -> rentalService.rentVehicle(input, licenses,
-							customerId, customerName, customerPhone, () -> {
+					(licenses, customerId, customerName, customerPhone, customerEmail) -> rentalService.rentVehicle(
+							input, licenses, customerId, customerName, customerPhone, customerEmail, () -> {
 								Manager manager = new Manager();
 								manager.start();
 							}),
@@ -69,7 +69,7 @@ public class customerMenu {
 		}
 		if (rent.equalsIgnoreCase("yes")) {
 			rentalService.rentVehicle(input, newCustomer.getLicenses(), newCustomer.getId(), newCustomer.getName(),
-					newCustomer.getPhone(), () -> {
+					newCustomer.getPhone(), newCustomer.getEmail(), () -> {
 						Manager manager = new Manager();
 						manager.start();
 					});

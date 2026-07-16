@@ -81,6 +81,7 @@ class CustomerRentalServiceTest {
                         customerId,
                         customerName,
                         customerPhone,
+                        customerEmail,
                         startDate,
                         endDate,
                         rentalDays,
@@ -160,6 +161,7 @@ class CustomerRentalServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@email.com",
                 () -> backCalled.set(true)
         );
 
@@ -202,6 +204,7 @@ class CustomerRentalServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@email.com",
                 () -> backCalled.set(true)
         );
 
@@ -250,6 +253,7 @@ class CustomerRentalServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@email.com",
                 () -> {
                 }
         );
@@ -299,6 +303,7 @@ class CustomerRentalServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@email.com",
                 () -> {
                 }
         );
@@ -349,6 +354,7 @@ class CustomerRentalServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@email.com",
                 () -> {
                 }
         );

@@ -12,7 +12,7 @@ public class CustomerValidator {
 
     public boolean isValidEmail(String email) {
         return email != null
-                && email.matches("[a-zA-Z0-9]+@[a-zA-Z]+\\.[a-zA-Z]{2,}");
+                && email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
     public boolean isValidPhone(String phone) {

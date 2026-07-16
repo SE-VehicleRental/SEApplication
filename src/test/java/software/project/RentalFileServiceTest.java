@@ -51,6 +51,7 @@ class RentalFileServiceTest {
                 "1234567",
                 "Hala",
                 "0591234567",
+                "hala@gmailcom",
                 "2026-07-11",
                 "2026-07-13",
                 3,

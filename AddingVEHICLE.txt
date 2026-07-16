@@ -1,2 +1,1 @@
 1,Car,Toyota,Corolla,Red,123456,2020,50
-2,Car,kooo,fppf,red,009900,2020,90.0

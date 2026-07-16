@@ -1,18 +1,13 @@
 package software.project;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class customerMenu {
 	Scanner input = new Scanner(System.in);
-	private final RentalCalculator rentalCalculator = new RentalCalculator();
-	private final RentalFileService rentalFileService = new RentalFileService();
-	private final VehicleFileService vehicleFileService = new VehicleFileService();
-	private final LicenseService licenseService = new LicenseService();
 	private final CustomerRegistrationService registrationService = new CustomerRegistrationService();
 	private final VehicleBrowsingService vehicleBrowsingService = new VehicleBrowsingService();
 	private final CustomerProfileService profileService = new CustomerProfileService();
+	private final CustomerRentalService rentalService = new CustomerRentalService();
 
 	public void showMenu() {
 		System.out.println("Customer System");
@@ -48,10 +43,16 @@ public class customerMenu {
 			}
 		}
 		if (choice == 2) {
-			profileService.handleExistingCustomer(input, this::rentVehicle, () -> {
-				Manager manager = new Manager();
-				manager.start();
-			});
+			profileService.handleExistingCustomer(input,
+					(licenses, customerId, customerName, customerPhone) -> rentalService.rentVehicle(input, licenses,
+							customerId, customerName, customerPhone, () -> {
+								Manager manager = new Manager();
+								manager.start();
+							}),
+					() -> {
+						Manager manager = new Manager();
+						manager.start();
+					});
 			return;
 		}
 		CustomerData newCustomer = registrationService.registerCustomer(input);
@@ -67,64 +68,15 @@ public class customerMenu {
 			}
 		}
 		if (rent.equalsIgnoreCase("yes")) {
-			rentVehicle(newCustomer.getLicenses(), newCustomer.getId(), newCustomer.getName(), newCustomer.getPhone());
+			rentalService.rentVehicle(input, newCustomer.getLicenses(), newCustomer.getId(), newCustomer.getName(),
+					newCustomer.getPhone(), () -> {
+						Manager manager = new Manager();
+						manager.start();
+					});
 		} else {
 			Manager m = new Manager();
 			m.start();
 		}
-	}
-
-	private void rentVehicle(ArrayList<String> licenses, String customerId, String customerName, String customerPhone) {
-		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
-		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
-		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense);
-		if (vehicles.isEmpty()) {
-			System.out.println("No available vehicles for this license.");
-			Manager manager = new Manager();
-			manager.start();
-			return;
-		}
-		vehicleBrowsingService.displayVehicles(vehicles);
-		while (true) {
-			System.out.print("Enter Vehicle ID to rent: ");
-			int vehicleId = readInt();
-			String[] vehicle = vehicleFileService.findVehicleById(vehicles, vehicleId);
-			if (vehicle == null) {
-				System.out.println("Invalid Vehicle ID! Please choose one " + "of the available vehicles.");
-				continue;
-			}
-			double pricePerDay = Double.parseDouble(vehicle[7]);
-			LocalDate startDate;
-			LocalDate endDate;
-			while (true) {
-				try {
-					System.out.print("Enter rental start date (yyyy-mm-dd): ");
-					startDate = LocalDate.parse(input.nextLine().trim());
-					System.out.print("Enter rental end date (yyyy-mm-dd): ");
-					endDate = LocalDate.parse(input.nextLine().trim());
-					long days = rentalCalculator.calculateRentalDays(startDate, endDate);
-					double totalCost = rentalCalculator.calculateTotalCost(days, pricePerDay);
-					System.out.println("\n=== RENTAL DETAILS ===");
-					System.out.println("Vehicle: " + vehicle[2] + " - Plate: " + vehicle[3]);
-					System.out.println("Price per day: " + pricePerDay);
-					System.out.println("Rental period: " + days + " day(s)");
-					System.out.println("Total cost: " + totalCost);
-					createPromissoryNote(vehicle, customerId, customerName, customerPhone, startDate.toString(),
-							endDate.toString(), days, totalCost);
-					return;
-				} catch (IllegalArgumentException e) {
-					System.out.println("Invalid date! " + e.getMessage());
-				}
-			}
-		}
-	}
-
-	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,
-			String startDate, String endDate, long rentalDays, double totalCost) {
-		PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone, v[1], v[2], v[3],
-				v[7], startDate, endDate, String.valueOf(totalCost), () -> rentalFileService.saveRentalToFile(v,
-						customerId, customerName, customerPhone, startDate, endDate, rentalDays, totalCost));
-		form.setVisible(true);
 	}
 
 	private int readInt() {

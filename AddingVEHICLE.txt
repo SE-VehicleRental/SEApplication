@@ -86,3 +86,9 @@
 91,Car,Honda,Civic,Black,123456,2022,100.0
 92,Car,Honda,Civic,Black,123456,2022,100.0
 93,Car,Honda,Civic,Black,123456,2022,100.0
+94,Car,Honda,Civic,Black,123456,2022,100.0
+95,Car,Honda,Civic,Black,123456,2022,100.0
+96,Car,Honda,Civic,Black,123456,2022,100.0
+97,Car,Honda,Civic,Black,123456,2022,100.0
+98,Car,Honda,Civic,Black,123456,2022,100.0
+99,Car,Honda,Civic,Black,123456,2022,100.0

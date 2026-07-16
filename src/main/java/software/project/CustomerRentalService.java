@@ -1,0 +1,133 @@
+package software.project;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CustomerRentalService {
+
+	private final RentalCalculator rentalCalculator;
+	private final RentalFileService rentalFileService;
+	private final VehicleFileService vehicleFileService;
+	private final LicenseService licenseService;
+	private final VehicleBrowsingService vehicleBrowsingService;
+	private final RentalConfirmationAction confirmationAction;
+
+	public CustomerRentalService() {
+		this(new RentalCalculator(), new RentalFileService(), new VehicleFileService(), new LicenseService(),
+				new VehicleBrowsingService(), null);
+	}
+
+	CustomerRentalService(RentalCalculator rentalCalculator, RentalFileService rentalFileService,
+			VehicleFileService vehicleFileService, LicenseService licenseService,
+			VehicleBrowsingService vehicleBrowsingService, RentalConfirmationAction confirmationAction) {
+
+		this.rentalCalculator = rentalCalculator;
+		this.rentalFileService = rentalFileService;
+		this.vehicleFileService = vehicleFileService;
+		this.licenseService = licenseService;
+		this.vehicleBrowsingService = vehicleBrowsingService;
+		this.confirmationAction = confirmationAction;
+	}
+
+	public void rentVehicle(Scanner input, ArrayList<String> licenses, String customerId, String customerName,
+			String customerPhone, Runnable backToMainAction) {
+
+		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
+
+		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
+
+		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense);
+
+		if (vehicles.isEmpty()) {
+			System.out.println("No available vehicles for this license.");
+
+			backToMainAction.run();
+			return;
+		}
+
+		vehicleBrowsingService.displayVehicles(vehicles);
+
+		while (true) {
+			System.out.print("Enter Vehicle ID to rent: ");
+			int vehicleId = readInt(input);
+
+			String[] vehicle = vehicleFileService.findVehicleById(vehicles, vehicleId);
+
+			if (vehicle == null) {
+				System.out.println("Invalid Vehicle ID! Please choose one " + "of the available vehicles.");
+				continue;
+			}
+
+			double pricePerDay = Double.parseDouble(vehicle[7]);
+
+			while (true) {
+				try {
+					System.out.print("Enter rental start date (yyyy-mm-dd): ");
+
+					LocalDate startDate = LocalDate.parse(input.nextLine().trim());
+
+					System.out.print("Enter rental end date (yyyy-mm-dd): ");
+
+					LocalDate endDate = LocalDate.parse(input.nextLine().trim());
+
+					long rentalDays = rentalCalculator.calculateRentalDays(startDate, endDate);
+
+					double totalCost = rentalCalculator.calculateTotalCost(rentalDays, pricePerDay);
+
+					System.out.println("\n=== RENTAL DETAILS ===");
+					System.out.println("Vehicle: " + vehicle[2] + " - Plate: " + vehicle[3]);
+					System.out.println("Price per day: " + pricePerDay);
+					System.out.println("Rental period: " + rentalDays + " day(s)");
+					System.out.println("Total cost: " + totalCost);
+
+					createPromissoryNote(vehicle, customerId, customerName, customerPhone, startDate.toString(),
+							endDate.toString(), rentalDays, totalCost);
+
+					return;
+
+				} catch (Exception e) {
+					System.out.println("Invalid date! " + e.getMessage());
+				}
+			}
+		}
+	}
+
+	private void createPromissoryNote(String[] vehicle, String customerId, String customerName, String customerPhone,
+			String startDate, String endDate, long rentalDays, double totalCost) {
+
+		if (confirmationAction != null) {
+			confirmationAction.show(vehicle, customerId, customerName, customerPhone, startDate, endDate, rentalDays,
+					totalCost);
+			return;
+		}
+
+		PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone, vehicle[1],
+				vehicle[2], vehicle[3], vehicle[7], startDate, endDate, String.valueOf(totalCost),
+				() -> rentalFileService.saveRentalToFile(vehicle, customerId, customerName, customerPhone, startDate,
+						endDate, rentalDays, totalCost));
+
+		form.setVisible(true);
+	}
+
+	int readInt(Scanner input) {
+
+		while (true) {
+			String value = input.nextLine().trim();
+
+			try {
+				return Integer.parseInt(value);
+
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input! Please enter a number.");
+			}
+		}
+	}
+
+	@FunctionalInterface
+	interface RentalConfirmationAction {
+
+		void show(String[] vehicle, String customerId, String customerName, String customerPhone, String startDate,
+				String endDate, long rentalDays, double totalCost);
+	}
+}

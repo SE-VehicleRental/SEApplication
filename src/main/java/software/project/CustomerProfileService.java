@@ -234,7 +234,7 @@ public class CustomerProfileService {
         }
     }
 
-    @FunctionalInterface
+  
     public interface CustomerRentalAction {
 
         void rent(

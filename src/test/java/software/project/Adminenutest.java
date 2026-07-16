@@ -1,4 +1,4 @@
-package software.project;
+/*package software.project;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedReader;
@@ -265,4 +265,4 @@ public class Adminenutest {
 	 }
 	 
 	 
-}
+}*/

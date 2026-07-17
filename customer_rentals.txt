@@ -33,3 +33,20 @@ RentalEndDate: 2026-09-09
 RentalDays: 33
 TotalCost: 1650.0
 ---------------------
+CustomerID: 2005054
+CustomerName: wijrisheh
+CustomerPhone: 5555522233
+CustomerEmail: s12324450@stu.najah.edu
+VehicleID: 2
+VehicleType: Car
+VehicleModel: KIA
+PlateNumber: MER
+VehicleColor: red
+VehicleNumber: 145268
+VehicleYear: 2025
+PricePerDay: 2100.0
+RentalStartDate: 2026-10-22
+RentalEndDate: 2026-10-30
+RentalDays: 9
+TotalCost: 18900.0
+---------------------

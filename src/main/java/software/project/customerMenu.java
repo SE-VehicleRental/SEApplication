@@ -157,9 +157,32 @@ public class customerMenu {
 
 	private void createPromissoryNote(String[] v, String customerId, String customerName, String customerPhone,String customerEmail,
 			String startDate, String endDate, long rentalDays, double totalCost) {
-		PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone, v[1], v[2], v[3],
-				v[7], startDate, endDate, String.valueOf(totalCost), () -> rentalFileService.saveRentalToFile(v,
-						customerId, customerName, customerPhone,  customerEmail, startDate, endDate, rentalDays, totalCost));
+		PromissoryNoteForm form = new PromissoryNoteForm(
+		        customerName,
+		        customerId,
+		        customerPhone,
+		        v[1],
+		        v[2],
+		        v[3],
+		        v[7],
+		        startDate,
+		        endDate,
+		        String.valueOf(totalCost),
+		        () -> {
+		            rentalFileService.saveRentalToFile(
+		                    v,
+		                    customerId,
+		                    customerName,
+		                    customerPhone,
+		                    customerEmail,
+		                    startDate,
+		                    endDate,
+		                    rentalDays,
+		                    totalCost);
+
+		            Manager manager = new Manager();
+		            manager.start();
+		        });
 		form.setVisible(true);
 	}
 	

@@ -159,3 +159,31 @@ Phone: 9999333344
 Payment: Cash
 License: [Car]
 ----------------------
+ID: 9922876
+Name: ooro
+Email: jdj@email.com
+Phone: 9993338844
+Payment: Cash
+License: [Car, Truck]
+----------------------
+ID: 2200000
+Name: okco
+Email: hhghg@email.com
+Phone: 0003339994
+Payment: Cash
+License: [Car]
+----------------------
+ID: 3344552
+Name: ijij
+Email: jnjn@email.com
+Phone: 0022341231
+Payment: Visa
+License: [Car]
+----------------------
+ID: 6633878
+Name: knk
+Email: hjhu@email.com
+Phone: 0011111111
+Payment: Cash
+License: [Car]
+----------------------

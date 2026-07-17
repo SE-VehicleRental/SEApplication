@@ -165,14 +165,10 @@ public class RentalFileService {
     
 
     /**
-     * Checks whether a vehicle is currently rented.
-     * A vehicle is considered rented if its rental end date
-     * is today or in the future.
+     * Displays all rental records for a specific customer.
      *
-     * @param vehicleId The ID of the vehicle to check.
-     * @return true if the vehicle is currently rented, otherwise false.
+     * @param customerId The ID of the customer whose rentals will be displayed.
      */
-    
     public void showCustomerRentals(String customerId) {
 
         System.out.println("\n=== YOUR RENTALS ===");
@@ -231,6 +227,7 @@ public class RentalFileService {
      * @param customerId The customer's ID.
      * @param customerName The customer's name.
      * @param customerPhone The customer's phone number.
+     * @param customerEmail The customer's email address.
      * @param startDate The rental start date.
      * @param endDate The rental end date.
      * @param rentalDays The total number of rental days.

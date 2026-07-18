@@ -1,1 +1,2 @@
 1,Car,Toyota,Corolla,Red,123456,2020,50
+2,Truck,a,hss,black,123455,2024,250.0

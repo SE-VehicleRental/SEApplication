@@ -134,6 +134,8 @@ public class PromissoryNoteForm extends JFrame {
                     this,
                     "Promissory note created successfully, and the rental has been saved!"
             );
+            
+           
 
             pdfButton.setEnabled(false); 
         });
@@ -141,6 +143,9 @@ public class PromissoryNoteForm extends JFrame {
         add(panel);
 
         setVisible(true);
+        
+        
+        
     }
 
 }

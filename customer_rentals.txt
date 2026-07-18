@@ -152,3 +152,37 @@ RentalEndDate: 2026-10-16
 RentalDays: 2
 TotalCost: 108.0
 ---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1245879635
+CustomerEmail: s12323494@stu.najah.edu
+VehicleID: 1
+VehicleType: Car
+VehicleModel: cc
+PlateNumber: cc
+VehicleColor: cc
+VehicleNumber: 254178
+VehicleYear: 2005
+PricePerDay: 54.0
+RentalStartDate: 2026-12-10
+RentalEndDate: 2026-12-24
+RentalDays: 15
+TotalCost: 810.0
+---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1245879635
+CustomerEmail: s12323494@stu.najah.edu
+VehicleID: 2
+VehicleType: Car
+VehicleModel: ss
+PlateNumber: ss
+VehicleColor: s
+VehicleNumber: 213548
+VehicleYear: 2020
+PricePerDay: 14.0
+RentalStartDate: 2026-12-22
+RentalEndDate: 2026-12-25
+RentalDays: 4
+TotalCost: 56.0
+---------------------

@@ -152,3 +152,20 @@ RentalEndDate: 2026-10-16
 RentalDays: 2
 TotalCost: 108.0
 ---------------------
+CustomerID: 1234567
+CustomerName: wijdanr
+CustomerPhone: 1245879635
+CustomerEmail: s12323494@stu.najah.edu
+VehicleID: 1
+VehicleType: Car
+VehicleModel: Toyota
+PlateNumber: Corolla
+VehicleColor: Red
+VehicleNumber: 123456
+VehicleYear: 2020
+PricePerDay: 50
+RentalStartDate: 2026-10-08
+RentalEndDate: 2026-10-10
+RentalDays: 3
+TotalCost: 150.0
+---------------------

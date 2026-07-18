@@ -1,6 +1,6 @@
 ID: 1234567
 Name: wijdanr
-Email: wij2@gmail.com
+Email: s12323494@stu.najah.edu
 Phone: 1245879635
 Payment: Visa
 License: [Car, Bus]

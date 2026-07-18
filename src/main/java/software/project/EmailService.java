@@ -55,30 +55,6 @@ public class EmailService {
     }
     
     
-    static void  run() {
-    	
-
-    	Dotenv dotenv = Dotenv.load();  
-    	
-    	String username = dotenv.get("EMAIL_USERNAME");
-    	String password = dotenv.get("EMAIL_PASSWORD");
-		
-    	
-    	EmailService emailService=new EmailService(username,password );
-    	
-    	String subject = "Appointment";
-        String body = "Dear user, Your Appointment is comming soon. Best regards";
-       
-        
-    	emailService.sendEmail("s12324450@stu.najah.edu", subject, body);
-    
-    	
-    }
-    
-    
-    public static void main(String []s) {
-    	run();
-    }
     
     
    

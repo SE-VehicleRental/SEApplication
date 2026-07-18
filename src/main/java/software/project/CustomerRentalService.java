@@ -12,66 +12,29 @@ public class CustomerRentalService {
 	private final LicenseService licenseService;
 	private final VehicleBrowsingService vehicleBrowsingService;
 	private final RentalConfirmationAction confirmationAction;
+	private final RentalPricingStrategy pricingStrategy;
 
-public CustomerRentalService() {
-	this(
-			new RentalCalculator(),
-			new RentalFileService(),
-			new VehicleFileService(),
-			new LicenseService(),
-			new VehicleBrowsingService(),
-			(
-					vehicle,
-					customerId,
-					customerName,
-					customerPhone,
-					customerEmail,
-					startDate,
-					endDate,
-					rentalDays,
-					totalCost,
-					backToMainAction) -> {
+	public CustomerRentalService() {
+		this(new RentalCalculator(), new RentalFileService(), new VehicleFileService(), new LicenseService(),
+				new VehicleBrowsingService(), new WeekendPricingStrategy(), (vehicle, customerId, customerName,
+						customerPhone, customerEmail, startDate, endDate, rentalDays, totalCost, backToMainAction) -> {
 
-				PromissoryNoteForm form =
-						new PromissoryNoteForm(
-								customerName,
-								customerId,
-								customerPhone,
-								vehicle[1],
-								vehicle[2],
-								vehicle[3],
-								vehicle[7],
-								startDate,
-								endDate,
-								String.valueOf(totalCost),
-								() -> {
-									new RentalFileService()
-											.saveRentalToFile(
-													vehicle,
-													customerId,
-													customerName,
-													customerPhone,
-													customerEmail,
-													startDate,
-													endDate,
-													rentalDays,
-													totalCost
-											);
+					PromissoryNoteForm form = new PromissoryNoteForm(customerName, customerId, customerPhone,
+							vehicle[1], vehicle[2], vehicle[3], vehicle[7], startDate, endDate,
+							String.valueOf(totalCost), () -> {
+								new RentalFileService().saveRentalToFile(vehicle, customerId, customerName,
+										customerPhone, customerEmail, startDate, endDate, rentalDays, totalCost);
 
-									backToMainAction.run();
-								}
-						);
+								backToMainAction.run();
+							});
 
-				form.setVisible(true);
-			}
-	);
-}
-	CustomerRentalService(
-			RentalCalculator rentalCalculator,
-			RentalFileService rentalFileService,
-			VehicleFileService vehicleFileService,
-			LicenseService licenseService,
-			VehicleBrowsingService vehicleBrowsingService,
+					form.setVisible(true);
+				});
+	}
+
+	CustomerRentalService(RentalCalculator rentalCalculator, RentalFileService rentalFileService,
+			VehicleFileService vehicleFileService, LicenseService licenseService,
+			VehicleBrowsingService vehicleBrowsingService, RentalPricingStrategy pricingStrategy,
 			RentalConfirmationAction confirmationAction) {
 
 		this.rentalCalculator = rentalCalculator;
@@ -79,20 +42,14 @@ public CustomerRentalService() {
 		this.vehicleFileService = vehicleFileService;
 		this.licenseService = licenseService;
 		this.vehicleBrowsingService = vehicleBrowsingService;
+		this.pricingStrategy = pricingStrategy;
 		this.confirmationAction = confirmationAction;
 	}
 
-	public void rentVehicle(
-			Scanner input,
-			ArrayList<String> licenses,
-			String customerId,
-			String customerName,
-			String customerPhone,
-			String customerEmail,
-			Runnable backToMainAction) {
+	public void rentVehicle(Scanner input, ArrayList<String> licenses, String customerId, String customerName,
+			String customerPhone, String customerEmail, Runnable backToMainAction) {
 
-		String chosenLicense =
-				licenseService.chooseOneLicense(input, licenses);
+		String chosenLicense = licenseService.chooseOneLicense(input, licenses);
 
 		LocalDate startDate;
 		LocalDate endDate;
@@ -100,25 +57,15 @@ public CustomerRentalService() {
 
 		while (true) {
 			try {
-				System.out.print(
-						"Enter rental start date (yyyy-mm-dd): "
-				);
+				System.out.print("Enter rental start date (yyyy-mm-dd): ");
 
-				startDate =
-						LocalDate.parse(input.nextLine().trim());
+				startDate = LocalDate.parse(input.nextLine().trim());
 
-				System.out.print(
-						"Enter rental end date (yyyy-mm-dd): "
-				);
+				System.out.print("Enter rental end date (yyyy-mm-dd): ");
 
-				endDate =
-						LocalDate.parse(input.nextLine().trim());
+				endDate = LocalDate.parse(input.nextLine().trim());
 
-				rentalDays =
-						rentalCalculator.calculateRentalDays(
-								startDate,
-								endDate
-						);
+				rentalDays = rentalCalculator.calculateRentalDays(startDate, endDate);
 
 				break;
 
@@ -127,24 +74,12 @@ public CustomerRentalService() {
 			}
 		}
 
-		System.out.println(
-				"\nAvailable "
-						+ chosenLicense
-						+ " vehicles:\n"
-		);
+		System.out.println("\nAvailable " + chosenLicense + " vehicles:\n");
 
-		ArrayList<String[]> vehicles =
-				vehicleFileService.getAvailableVehiclesByType(
-						chosenLicense,
-						startDate,
-						endDate
-				);
+		ArrayList<String[]> vehicles = vehicleFileService.getAvailableVehiclesByType(chosenLicense, startDate, endDate);
 
 		if (vehicles.isEmpty()) {
-			System.out.println(
-					"No vehicles are available during "
-							+ "the selected period."
-			);
+			System.out.println("No vehicles are available during " + "the selected period.");
 
 			backToMainAction.run();
 			return;
@@ -153,130 +88,64 @@ public CustomerRentalService() {
 		vehicleBrowsingService.displayVehicles(vehicles);
 
 		while (true) {
-			System.out.print(
-					"Enter Vehicle ID to rent: "
-			);
+			System.out.print("Enter Vehicle ID to rent: ");
 
 			int vehicleId = readInt(input);
 
-			String[] vehicle =
-					vehicleFileService.findVehicleById(
-							vehicles,
-							vehicleId
-					);
+			String[] vehicle = vehicleFileService.findVehicleById(vehicles, vehicleId);
 
 			if (vehicle == null) {
-				System.out.println(
-						"Invalid Vehicle ID! Please choose one "
-								+ "of the available vehicles."
-				);
+				System.out.println("Invalid Vehicle ID! Please choose one " + "of the available vehicles.");
 				continue;
 			}
 
-			double pricePerDay =
-					Double.parseDouble(vehicle[7]);
+			double pricePerDay = Double.parseDouble(vehicle[7]);
 
-			double totalCost =
-					rentalCalculator.calculateTotalCost(
-							rentalDays,
-							pricePerDay
-					);
+			double totalCost = pricingStrategy.calculateTotalCost(startDate, endDate, pricePerDay);
 
 			System.out.println("\n=== RENTAL DETAILS ===");
 
-			System.out.println(
-					"Vehicle: "
-							+ vehicle[2]
-							+ " - Plate: "
-							+ vehicle[3]
-			);
+			System.out.println("Vehicle: " + vehicle[2] + " - Plate: " + vehicle[3]);
 
-			System.out.println(
-					"Price per day: " + pricePerDay
-			);
+			System.out.println("Price per day: " + pricePerDay);
 
-			System.out.println(
-					"Rental period: "
-							+ rentalDays
-							+ " day(s)"
-			);
+			System.out.println("Rental period: " + rentalDays + " day(s)");
 
-			System.out.println(
-					"Total cost: " + totalCost
-			);
+			System.out.println("Total cost: " + totalCost);
 
-			createPromissoryNote(
-					vehicle,
-					customerId,
-					customerName,
-					customerPhone,
-					customerEmail,
-					startDate.toString(),
-					endDate.toString(),
-					rentalDays,
-					totalCost,
-					backToMainAction
-			);
+			createPromissoryNote(vehicle, customerId, customerName, customerPhone, customerEmail, startDate.toString(),
+					endDate.toString(), rentalDays, totalCost, backToMainAction);
 
 			return;
 		}
 	}
 
-private void createPromissoryNote(
-		String[] vehicle,
-		String customerId,
-		String customerName,
-		String customerPhone,
-		String customerEmail,
-		String startDate,
-		String endDate,
-		long rentalDays,
-		double totalCost,
-		Runnable backToMainAction) {
+	private void createPromissoryNote(String[] vehicle, String customerId, String customerName, String customerPhone,
+			String customerEmail, String startDate, String endDate, long rentalDays, double totalCost,
+			Runnable backToMainAction) {
 
-	confirmationAction.show(
-			vehicle,
-			customerId,
-			customerName,
-			customerPhone,
-			customerEmail,
-			startDate,
-			endDate,
-			rentalDays,
-			totalCost,
-			backToMainAction
-	);
-}
+		confirmationAction.show(vehicle, customerId, customerName, customerPhone, customerEmail, startDate, endDate,
+				rentalDays, totalCost, backToMainAction);
+	}
+
 	int readInt(Scanner input) {
 
 		while (true) {
-			String value =
-					input.nextLine().trim();
+			String value = input.nextLine().trim();
 
 			try {
 				return Integer.parseInt(value);
 
 			} catch (NumberFormatException e) {
-				System.out.println(
-						"Invalid input! Please enter a number."
-				);
+				System.out.println("Invalid input! Please enter a number.");
 			}
 		}
 	}
 
-@FunctionalInterface
-interface RentalConfirmationAction {
+	@FunctionalInterface
+	interface RentalConfirmationAction {
 
-	void show(
-			String[] vehicle,
-			String customerId,
-			String customerName,
-			String customerPhone,
-			String customerEmail,
-			String startDate,
-			String endDate,
-			long rentalDays,
-			double totalCost,
-			Runnable backToMainAction
-	);
-}}
+		void show(String[] vehicle, String customerId, String customerName, String customerPhone, String customerEmail,
+				String startDate, String endDate, long rentalDays, double totalCost, Runnable backToMainAction);
+	}
+}

@@ -55,14 +55,30 @@ class CustomerRentalServiceTest {
 
 		capturedRentalDays = new AtomicReference<>();
 
-		service = new CustomerRentalService(new RentalCalculator(), rentalFileService, vehicleFileService,
-				new LicenseService(), browsingService, (vehicle, customerId, customerName, customerPhone, customerEmail,
-						startDate, endDate, rentalDays, totalCost, backToMainAction) -> {
+		service = new CustomerRentalService(
+		        new RentalCalculator(),
+		        rentalFileService,
+		        vehicleFileService,
+		        new LicenseService(),
+		        browsingService,
+		        new StandardPricingStrategy(),
+		        (
+		                vehicle,
+		                customerId,
+		                customerName,
+		                customerPhone,
+		                customerEmail,
+		                startDate,
+		                endDate,
+		                rentalDays,
+		                totalCost,
+		                backToMainAction) -> {
 
-					confirmationOpened.set(true);
-					capturedTotalCost.set(totalCost);
-					capturedRentalDays.set(rentalDays);
-				});
+		            confirmationOpened.set(true);
+		            capturedTotalCost.set(totalCost);
+		            capturedRentalDays.set(rentalDays);
+		        }
+		);
 	}
 
 	@AfterEach

@@ -1,4 +1,0 @@
-1,Car,Toyota,Corolla,Red,123456,45.0,50
-2,Car,KIA,MER,red,145268,2025,2100.0
-3,Car,ttt,ty,lk,365214,2005,20.0
-4,Car,dk,ds,blue,789546,2020,200.0

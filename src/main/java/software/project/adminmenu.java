@@ -8,9 +8,18 @@ import java.util.Scanner;
 public class adminmenu {
 	Scanner input = new Scanner(System.in);
 
-	private final AdminVehicleFileService fileService = new AdminVehicleFileService();
+	private final AdminVehicleFileService fileService;
+	private final AdminInputService inputService;
 
-	private final AdminInputService inputService = new AdminInputService();
+	public adminmenu() {
+		this(new AdminVehicleFileService(), new AdminInputService());
+	}
+
+	adminmenu(AdminVehicleFileService fileService, AdminInputService inputService) {
+
+		this.fileService = fileService;
+		this.inputService = inputService;
+	}
 
 	public void showmenu() {
 		while (true) {

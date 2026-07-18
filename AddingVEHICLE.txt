@@ -1,0 +1,1 @@
+1,Car,Toyota,Corolla,Red,123456,2020,50

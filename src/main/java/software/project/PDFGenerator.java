@@ -44,8 +44,8 @@ public class PDFGenerator {
             document.add(new Paragraph(" "));
 
             document.add(new Paragraph("Vehicle Type: " + vehicleType));
-            document.add(new Paragraph("Vehicle Model: " + vehicleModel));
-            document.add(new Paragraph("Plate Number: " + VehicleNumber));
+            document.add(new Paragraph("Vehicle company: " + vehicleModel));
+            document.add(new Paragraph("Vehicle model: " + VehicleNumber));
             document.add(new Paragraph("Price Per Day: " + pricePerDay));
 
             document.add(new Paragraph(" "));

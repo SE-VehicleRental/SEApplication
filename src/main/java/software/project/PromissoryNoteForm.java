@@ -10,8 +10,8 @@ public class PromissoryNoteForm extends JFrame {
 	        String customerId,
 	        String customerPhone,
 	        String vehicleType,
-	        String vehicleModel,
-	        String VehicleNumber,
+	        String vehicleCompany,
+	        String VehicleModel,
 	        String pricePerDay,
 	        String rentalStartDate,
 	        String rentalEndDate,
@@ -60,9 +60,9 @@ public class PromissoryNoteForm extends JFrame {
 
         		+ "Vehicle Type : " + vehicleType + "\n\n"
 
-        		+ "Vehicle Model : " + vehicleModel + "\n\n"
+        		+ "Vehicle Company : " + vehicleCompany + "\n\n"
 
-        		+ "Plate Number : " + VehicleNumber + "\n\n"
+        		+ "Vehicle Model : " + VehicleModel + "\n\n"
 
         		+ "Customer Phone : " + customerPhone + "\n\n"
 
@@ -120,8 +120,8 @@ public class PromissoryNoteForm extends JFrame {
                     customerId,
                     customerPhone,
                     vehicleType,
-                    vehicleModel,
-                    VehicleNumber,
+                    vehicleCompany,
+                    VehicleModel,
                     pricePerDay,
                     signaturePanel.getSignatureImage()
             );

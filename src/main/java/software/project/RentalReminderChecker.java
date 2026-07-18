@@ -67,11 +67,8 @@ public class RentalReminderChecker {
                          .trim();
 
                 }
-
-
-
-
-
+                
+                
                 else if(line.startsWith("---------------------")) {
                     sendReminder(
                             email,
@@ -82,16 +79,11 @@ public class RentalReminderChecker {
                     name="";
                     email="";
                     endDate="";
-
-
                 }
-
             }
 
 
             reader.close();
-
-
 
         }catch(Exception e){
 
@@ -99,10 +91,10 @@ public class RentalReminderChecker {
 
         }
 
-
     }
 
-
+    
+    
 
 
     private void sendReminder(

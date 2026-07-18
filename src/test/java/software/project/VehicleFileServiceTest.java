@@ -288,4 +288,228 @@ class VehicleFileServiceTest {
 
         assertEquals(1, result.size());
     }
+    
+    @Test
+    void getAvailableVehiclesByTypeAndDatesShouldReturnAvailableVehicle()
+            throws IOException {
+
+        Path vehiclesFile =
+                tempDirectory.resolve("AddingVEHICLE.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        Files.writeString(
+                vehiclesFile,
+                "1,Car,Toyota,ABC-123,White,V100,2024,50.0\n"
+        );
+
+        Files.writeString(
+                rentalsFile,
+                "VehicleID: 1\n"
+                        + "RentalStartDate: 2026-07-10\n"
+                        + "RentalEndDate: 2026-07-15\n"
+                        + "---------------------\n"
+        );
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        vehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "Car",
+                        LocalDate.of(2026, 7, 16),
+                        LocalDate.of(2026, 7, 20)
+                );
+
+        assertEquals(1, result.size());
+        assertEquals("1", result.get(0)[0]);
+    }
+    
+    @Test
+    void getAvailableVehiclesByTypeAndDatesShouldIgnoreOverlappingRental()
+            throws IOException {
+
+        Path vehiclesFile =
+                tempDirectory.resolve("AddingVEHICLE.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        Files.writeString(
+                vehiclesFile,
+                "1,Car,Toyota,ABC-123,White,V100,2024,50.0\n"
+                        + "2,Car,Honda,DEF-456,Black,V200,2023,60.0\n"
+        );
+
+        Files.writeString(
+                rentalsFile,
+                "VehicleID: 1\n"
+                        + "RentalStartDate: 2026-07-10\n"
+                        + "RentalEndDate: 2026-07-15\n"
+                        + "---------------------\n"
+        );
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        vehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "Car",
+                        LocalDate.of(2026, 7, 12),
+                        LocalDate.of(2026, 7, 18)
+                );
+
+        assertEquals(1, result.size());
+        assertEquals("2", result.get(0)[0]);
+        assertEquals("Honda", result.get(0)[2]);
+    }
+    
+    @Test
+    void getAvailableVehiclesByTypeAndDatesShouldIgnoreDifferentType()
+            throws IOException {
+
+        Path vehiclesFile =
+                tempDirectory.resolve("AddingVEHICLE.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        Files.writeString(
+                vehiclesFile,
+                "1,Car,Toyota,ABC-123,White,V100,2024,50.0\n"
+                        + "2,Truck,Volvo,DEF-456,Blue,V200,2023,100.0\n"
+        );
+
+        Files.writeString(rentalsFile, "");
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        vehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "Car",
+                        LocalDate.of(2026, 7, 10),
+                        LocalDate.of(2026, 7, 15)
+                );
+
+        assertEquals(1, result.size());
+        assertEquals("Car", result.get(0)[1]);
+        assertEquals("Toyota", result.get(0)[2]);
+    }
+    
+    @Test
+    void getAvailableVehiclesByTypeAndDatesShouldIgnoreMalformedLines()
+            throws IOException {
+
+        Path vehiclesFile =
+                tempDirectory.resolve("AddingVEHICLE.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        Files.writeString(
+                vehiclesFile,
+                "invalid,line\n"
+                        + "1,Car,Toyota,ABC-123,White,V100,2024,50.0\n"
+        );
+
+        Files.writeString(rentalsFile, "");
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        vehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "Car",
+                        LocalDate.of(2026, 7, 10),
+                        LocalDate.of(2026, 7, 15)
+                );
+
+        assertEquals(1, result.size());
+        assertEquals("Toyota", result.get(0)[2]);
+    }
+    
+    @Test
+    void getAvailableVehiclesByTypeAndDatesShouldReturnEmptyWhenFileMissing() {
+
+        Path missingVehiclesFile =
+                tempDirectory.resolve("missing-vehicles.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        missingVehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "Car",
+                        LocalDate.of(2026, 7, 10),
+                        LocalDate.of(2026, 7, 15)
+                );
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
+    
+    @Test
+    void vehicleTypeWithDatesShouldIgnoreCase()
+            throws IOException {
+
+        Path vehiclesFile =
+                tempDirectory.resolve("AddingVEHICLE.txt");
+
+        Path rentalsFile =
+                tempDirectory.resolve("customer_rentals.txt");
+
+        Files.writeString(
+                vehiclesFile,
+                "1,Car,Toyota,ABC-123,White,V100,2024,50.0\n"
+        );
+
+        Files.writeString(rentalsFile, "");
+
+        VehicleFileService service =
+                new VehicleFileService(
+                        vehiclesFile.toString(),
+                        new RentalFileService(
+                                rentalsFile.toString()
+                        )
+                );
+
+        ArrayList<String[]> result =
+                service.getAvailableVehiclesByType(
+                        "car",
+                        LocalDate.of(2026, 7, 10),
+                        LocalDate.of(2026, 7, 15)
+                );
+
+        assertEquals(1, result.size());
+    }
 }

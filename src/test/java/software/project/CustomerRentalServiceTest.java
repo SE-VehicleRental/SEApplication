@@ -55,30 +55,15 @@ class CustomerRentalServiceTest {
 
 		capturedRentalDays = new AtomicReference<>();
 
-		service = new CustomerRentalService(
-		        new RentalCalculator(),
-		        rentalFileService,
-		        vehicleFileService,
-		        new LicenseService(),
-		        browsingService,
-		        new StandardPricingStrategy(),
-		        (
-		                vehicle,
-		                customerId,
-		                customerName,
-		                customerPhone,
-		                customerEmail,
-		                startDate,
-		                endDate,
-		                rentalDays,
-		                totalCost,
-		                backToMainAction) -> {
+		service = new CustomerRentalService(new RentalCalculator(), rentalFileService, vehicleFileService,
+				new LicenseService(), browsingService, new StandardPricingStrategy(),
+				(vehicle, customerId, customerName, customerPhone, customerEmail, startDate, endDate, rentalDays,
+						totalCost, backToMainAction) -> {
 
-		            confirmationOpened.set(true);
-		            capturedTotalCost.set(totalCost);
-		            capturedRentalDays.set(rentalDays);
-		        }
-		);
+					confirmationOpened.set(true);
+					capturedTotalCost.set(totalCost);
+					capturedRentalDays.set(rentalDays);
+				});
 	}
 
 	@AfterEach
@@ -303,7 +288,11 @@ class CustomerRentalServiceTest {
 	@Test
 	void defaultConstructorShouldReturnToMainWhenNoVehiclesAreAvailable() throws IOException {
 
-		Files.writeString(Path.of("AddingVEHICLE.txt"), "1,Bus,Mercedes,ABC-123,White,V100,2024,100.0\n");
+		Path defaultVehiclesFile = Path.of("AddingVEHICLE.txt");
+
+		boolean vehiclesFileAlreadyExists = Files.exists(defaultVehiclesFile);
+
+		String originalVehiclesContent = vehiclesFileAlreadyExists ? Files.readString(defaultVehiclesFile) : null;
 
 		Path defaultRentalsFile = Path.of("customer_rentals.txt");
 
@@ -311,13 +300,14 @@ class CustomerRentalServiceTest {
 
 		String originalRentalsContent = rentalsFileAlreadyExists ? Files.readString(defaultRentalsFile) : null;
 
+		Files.writeString(defaultVehiclesFile, "1,Bus,Mercedes,ABC-123,White,V100,2024,100.0\n");
+
 		Files.writeString(defaultRentalsFile, "");
 
 		try {
 			CustomerRentalService defaultService = new CustomerRentalService();
 
 			ArrayList<String> licenses = new ArrayList<>();
-
 			licenses.add("Car");
 
 			AtomicBoolean backCalled = new AtomicBoolean(false);
@@ -332,7 +322,12 @@ class CustomerRentalServiceTest {
 			assertTrue(output.toString().contains("No vehicles are available during " + "the selected period."));
 
 		} finally {
-			Files.deleteIfExists(Path.of("AddingVEHICLE.txt"));
+
+			if (vehiclesFileAlreadyExists) {
+				Files.writeString(defaultVehiclesFile, originalVehiclesContent);
+			} else {
+				Files.deleteIfExists(defaultVehiclesFile);
+			}
 
 			if (rentalsFileAlreadyExists) {
 				Files.writeString(defaultRentalsFile, originalRentalsContent);

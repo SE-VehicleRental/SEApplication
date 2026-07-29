@@ -23,8 +23,8 @@ public class AdminVehicleFileService {
 
 		int lastID = 0;
 
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(vehiclesFile));
+		try (
+			BufferedReader br = new BufferedReader(new FileReader(vehiclesFile))){
 
 			String line;
 
@@ -38,9 +38,10 @@ public class AdminVehicleFileService {
 				lastID = Integer.parseInt(data[0]);
 			}
 
-			br.close();
+			
 
 		} catch (IOException e) {
+			e.printStackTrace();
 
 		}
 
@@ -80,10 +81,11 @@ public class AdminVehicleFileService {
 				}
 			}
 
-			br.close();
+			
 
 		} catch (IOException e) {
-			System.out.println("Error checking plate number.");
+			e.printStackTrace();
+
 		}
 
 		return false;

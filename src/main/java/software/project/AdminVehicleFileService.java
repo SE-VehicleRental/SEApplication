@@ -132,13 +132,10 @@ public class AdminVehicleFileService {
 	}
 
 	public boolean deleteVehicleFromFile(String fileName, int id) {
-		try {
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
-
-			FileWriter fw = new FileWriter("temp.txt");
-
-			PrintWriter pw = new PrintWriter(fw);
+			
+				PrintWriter pw = new PrintWriter(new FileWriter("temp.txt"))) {
 
 			String line;
 			boolean deleted = false;
@@ -159,31 +156,20 @@ public class AdminVehicleFileService {
 
 			}
 
-			br.close();
-			pw.close();
+			 return deleted;
 
-			File oldFile = new File(fileName);
-			File newFile = new File("temp.txt");
-
-			oldFile.delete();
-			newFile.renameTo(oldFile);
-
-			return deleted;
 
 		} catch (IOException e) {
+			 e.printStackTrace();}
 
 			return false;
-		}
+		
 	}
 
 	public boolean editVehicleFromFile(String fileName, int id, int choice, String newValue) {
 
-		try {
-
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
-
-			FileWriter fw = new FileWriter("temp.txt");
-			PrintWriter pw = new PrintWriter(fw);
+		 try (BufferedReader br = new BufferedReader(new FileReader(fileName));
+		         PrintWriter pw = new PrintWriter(new FileWriter("temp.txt"))) {
 
 			String line;
 			boolean edited = false;
@@ -217,8 +203,7 @@ public class AdminVehicleFileService {
 						break;
 
 					default:
-						br.close();
-						pw.close();
+						
 						return false;
 					}
 
@@ -228,8 +213,6 @@ public class AdminVehicleFileService {
 				pw.println(String.join(",", data));
 			}
 
-			br.close();
-			pw.close();
 
 			File oldFile = new File(fileName);
 			File newFile = new File("temp.txt");

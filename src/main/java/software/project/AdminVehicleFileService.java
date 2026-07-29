@@ -35,7 +35,12 @@ public class AdminVehicleFileService {
 
 				String[] data = line.split(",");
 
-				lastID = Integer.parseInt(data[0]);
+				
+				if (data.length > 0) {
+				    lastID = Integer.parseInt(data[0]);
+				}
+			
+				
 			}
 
 			
@@ -105,7 +110,7 @@ public class AdminVehicleFileService {
 
 				String[] data = line.split(",");
 
-				if (data[1].equalsIgnoreCase(vehicleType)) {
+				if (data.length >= 8 && data[1].equalsIgnoreCase(vehicleType)){
 
 					found = true;
 
@@ -143,6 +148,10 @@ public class AdminVehicleFileService {
 			while ((line = br.readLine()) != null) {
 
 				String[] data = line.split(",");
+				if (data.length == 0) {
+				    pw.println(line);
+				    continue;
+				}
 
 				if (Integer.parseInt(data[0]) != id) {
 
@@ -177,6 +186,11 @@ public class AdminVehicleFileService {
 			while ((line = br.readLine()) != null) {
 
 				String[] data = line.split(",");
+				
+				 if (data.length < 8) {
+		                pw.println(line);
+		                continue;
+		            }
 
 				if (Integer.parseInt(data[0]) == id) {
 

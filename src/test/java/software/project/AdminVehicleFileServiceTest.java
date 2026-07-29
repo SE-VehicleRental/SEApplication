@@ -320,4 +320,40 @@ class AdminVehicleFileServiceTest {
 
 		assertFalse(service.plateExists("999999"));
 	}
+
+	@Test
+	void generateVehicleIdShouldReturnOneWhenFileDoesNotExist() {
+
+		Path missingFile = tempDirectory.resolve("missing-vehicles.txt");
+
+		AdminVehicleFileService missingFileService = new AdminVehicleFileService(missingFile.toString());
+
+		assertEquals(1, missingFileService.generateVehicleID());
+	}
+
+	@Test
+	void plateExistsShouldReturnFalseWhenFileDoesNotExist() {
+
+		Path missingFile = tempDirectory.resolve("missing-vehicles.txt");
+
+		AdminVehicleFileService missingFileService = new AdminVehicleFileService(missingFile.toString());
+
+		ByteArrayOutputStream output = captureOutput();
+
+		boolean result = missingFileService.plateExists("123456");
+
+		assertFalse(result);
+
+		assertTrue(output.toString().contains("Error checking plate number."));
+	}
+
+	@Test
+	void checkVehicleExistsShouldIgnoreMalformedLine() throws IOException {
+
+		Files.writeString(vehiclesFile, "invalid-line\n" + "1,Car,Toyota,Corolla,Red,123456,2020,50.0\n");
+
+		boolean result = service.checkVehicleExists(vehiclesFile.toString(), 1, "Car");
+
+		assertTrue(result);
+	}
 }

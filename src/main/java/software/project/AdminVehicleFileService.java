@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class AdminVehicleFileService {
 
@@ -23,8 +26,7 @@ public class AdminVehicleFileService {
 
 		int lastID = 0;
 
-		try (
-			BufferedReader br = new BufferedReader(new FileReader(vehiclesFile))){
+		try (BufferedReader br = new BufferedReader(new FileReader(vehiclesFile))) {
 
 			String line;
 
@@ -35,15 +37,11 @@ public class AdminVehicleFileService {
 
 				String[] data = line.split(",");
 
-				
 				if (data.length > 0) {
-				    lastID = Integer.parseInt(data[0]);
+					lastID = Integer.parseInt(data[0]);
 				}
-			
-				
-			}
 
-			
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,26 +69,22 @@ public class AdminVehicleFileService {
 
 	public boolean plateExists(String plateNumber) {
 
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(vehiclesFile));
-
+		try (BufferedReader br = new BufferedReader(new FileReader(vehiclesFile))) {
 			String line;
 
 			while ((line = br.readLine()) != null) {
 
 				String[] data = line.split(",");
 
-				if (data.length > 5 && data[5].equals(plateNumber)) {
-					br.close();
+				if (data.length > 5 && data[5].trim().equalsIgnoreCase(plateNumber.trim())) {
+
 					return true;
 				}
 			}
 
-			
-
 		} catch (IOException e) {
-			e.printStackTrace();
-
+			System.out.println("Error checking plate number.");
+			return false;
 		}
 
 		return false;
@@ -110,7 +104,7 @@ public class AdminVehicleFileService {
 
 				String[] data = line.split(",");
 
-				if (data.length >= 8 && data[1].equalsIgnoreCase(vehicleType)){
+				if (data.length >= 8 && data[1].equalsIgnoreCase(vehicleType)) {
 
 					found = true;
 
@@ -137,48 +131,62 @@ public class AdminVehicleFileService {
 	}
 
 	public boolean deleteVehicleFromFile(String fileName, int id) {
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-			
-				PrintWriter pw = new PrintWriter(new FileWriter("temp.txt"))) {
+		Path originalPath = Path.of(fileName);
+		Path parent = originalPath.toAbsolutePath().getParent();
+		Path tempPath = parent.resolve("temp.txt");
 
+		boolean deleted = false;
+
+		try (BufferedReader br = Files.newBufferedReader(originalPath);
+				PrintWriter pw = new PrintWriter(Files.newBufferedWriter(tempPath))) {
 			String line;
-			boolean deleted = false;
 
 			while ((line = br.readLine()) != null) {
 
 				String[] data = line.split(",");
-				if (data.length == 0) {
-				    pw.println(line);
-				    continue;
-				}
 
-				if (Integer.parseInt(data[0]) != id) {
-
+				if (data.length == 0 || data[0].trim().isEmpty()) {
 					pw.println(line);
-
-				} else {
-
-					deleted = true;
-
+					continue;
 				}
 
+				try {
+					int vehicleId = Integer.parseInt(data[0].trim());
+
+					if (vehicleId == id) {
+						deleted = true;
+					} else {
+						pw.println(line);
+					}
+
+				} catch (NumberFormatException e) {
+					pw.println(line);
+				}
 			}
 
-			 return deleted;
+		} catch (IOException e) {
+			return false;
+		}
 
+		try {
+			if (deleted) {
+				Files.move(tempPath, originalPath, StandardCopyOption.REPLACE_EXISTING);
+			} else {
+				Files.deleteIfExists(tempPath);
+			}
+
+			return deleted;
 
 		} catch (IOException e) {
-			 e.printStackTrace();}
-
 			return false;
-		
+		}
 	}
 
 	public boolean editVehicleFromFile(String fileName, int id, int choice, String newValue) {
 
-		 try (BufferedReader br = new BufferedReader(new FileReader(fileName));
-		         PrintWriter pw = new PrintWriter(new FileWriter("temp.txt"))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName));
+				PrintWriter pw = new PrintWriter(new FileWriter("temp.txt"))) {
 
 			String line;
 			boolean edited = false;
@@ -186,11 +194,11 @@ public class AdminVehicleFileService {
 			while ((line = br.readLine()) != null) {
 
 				String[] data = line.split(",");
-				
-				 if (data.length < 8) {
-		                pw.println(line);
-		                continue;
-		            }
+
+				if (data.length < 8) {
+					pw.println(line);
+					continue;
+				}
 
 				if (Integer.parseInt(data[0]) == id) {
 
@@ -217,7 +225,7 @@ public class AdminVehicleFileService {
 						break;
 
 					default:
-						
+
 						return false;
 					}
 
@@ -226,7 +234,6 @@ public class AdminVehicleFileService {
 
 				pw.println(String.join(",", data));
 			}
-
 
 			File oldFile = new File(fileName);
 			File newFile = new File("temp.txt");

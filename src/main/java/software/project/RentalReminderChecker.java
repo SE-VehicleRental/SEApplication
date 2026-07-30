@@ -2,6 +2,7 @@ package software.project;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -84,10 +85,8 @@ public class RentalReminderChecker {
 
         	}
 
-        }catch(Exception e){
-
-            e.printStackTrace();
-
+        } catch (IOException e) {
+            System.out.println("Error reading rental file: " + e.getMessage());
         }
 
     }

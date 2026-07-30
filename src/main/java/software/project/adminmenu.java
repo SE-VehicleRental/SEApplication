@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class adminmenu {
+	private static final String VEHICLE_FILE = "AddingVEHICLE.txt";
 	Scanner input = new Scanner(System.in);
 
 	private final AdminVehicleFileService fileService;
@@ -221,10 +222,11 @@ public class adminmenu {
 
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
 			String line;
 			boolean found = false;
+			try (BufferedReader br =
+			         new BufferedReader(new FileReader(VEHICLE_FILE))) {
+			
 
 			while ((line = br.readLine()) != null) {
 
@@ -247,8 +249,7 @@ public class adminmenu {
 				}
 
 			}
-
-			br.close();
+			}
 
 			if (!found) {
 
@@ -268,6 +269,7 @@ public class adminmenu {
 
 				return;
 			}
+			
 
 			int id;
 
@@ -278,8 +280,8 @@ public class adminmenu {
 
 				boolean exists = false;
 
-				BufferedReader check = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
+				try (BufferedReader check =
+				         new BufferedReader(new FileReader(VEHICLE_FILE))) {
 				String line2;
 
 				while ((line2 = check.readLine()) != null) {
@@ -292,8 +294,7 @@ public class adminmenu {
 						break;
 					}
 				}
-
-				check.close();
+				}
 
 				if (exists) {
 					break;
@@ -360,7 +361,7 @@ public class adminmenu {
 			break;
 		}
 
-		boolean edited = fileService.editVehicleFromFile("AddingVEHICLE.txt", id, choice, newValue);
+		boolean edited = fileService.editVehicleFromFile(VEHICLE_FILE, id, choice, newValue);
 
 		if (edited)
 			System.out.println("Vehicle updated successfully.");
@@ -393,7 +394,7 @@ public class adminmenu {
 
 	public void displayVehicles(String vehicleType) {
 
-		boolean found = fileService.displayVehiclesFromFile("AddingVEHICLE.txt", vehicleType);
+		boolean found = fileService.displayVehiclesFromFile(VEHICLE_FILE, vehicleType);
 
 		if (!found) {
 
@@ -421,7 +422,7 @@ public class adminmenu {
 			System.out.print("Enter Vehicle ID to delete: ");
 			id = inputService.readInt();
 
-			boolean exists = fileService.checkVehicleExists("AddingVEHICLE.txt", id, vehicleType);
+			boolean exists = fileService.checkVehicleExists(VEHICLE_FILE, id, vehicleType);
 
 			if (exists) {
 				break;
@@ -436,7 +437,7 @@ public class adminmenu {
 
 	public void deleteVehicle(int id) {
 
-		boolean deleted = fileService.deleteVehicleFromFile("AddingVEHICLE.txt", id);
+		boolean deleted = fileService.deleteVehicleFromFile(VEHICLE_FILE, id);
 
 		if (deleted)
 			System.out.println("Vehicle deleted successfully.");

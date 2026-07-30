@@ -221,8 +221,8 @@ public class adminmenu {
 
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
+			try (BufferedReader br =
+			         new BufferedReader(new FileReader("AddingVEHICLE.txt"))) {
 			String line;
 			boolean found = false;
 
@@ -247,8 +247,8 @@ public class adminmenu {
 				}
 
 			}
+			
 
-			br.close();
 
 			if (!found) {
 
@@ -268,6 +268,7 @@ public class adminmenu {
 
 				return;
 			}
+			}
 
 			int id;
 
@@ -278,8 +279,8 @@ public class adminmenu {
 
 				boolean exists = false;
 
-				BufferedReader check = new BufferedReader(new FileReader("AddingVEHICLE.txt"));
-
+				try (BufferedReader check =
+				         new BufferedReader(new FileReader("AddingVEHICLE.txt"))) {
 				String line2;
 
 				while ((line2 = check.readLine()) != null) {
@@ -292,8 +293,8 @@ public class adminmenu {
 						break;
 					}
 				}
+				}
 
-				check.close();
 
 				if (exists) {
 					break;

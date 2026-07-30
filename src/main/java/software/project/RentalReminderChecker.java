@@ -2,26 +2,28 @@ package software.project;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import io.github.cdimascio.dotenv.Dotenv;
 
 
 public class RentalReminderChecker {
 
-
-    private String rentalsFile = "customer_rentals.txt";
-
+	private static final Logger LOGGER =
+	        Logger.getLogger(RentalReminderChecker.class.getName());
+	private static final String RENTALS_FILE = "customer_rentals.txt";
 
 
     public void checkAllRentals() {
 
 
-        try {
+     
 
 
         	try (BufferedReader reader =
         	         new BufferedReader(
-        	                 new FileReader(rentalsFile))) {
+        	        		 new FileReader(RENTALS_FILE))) {
 
 
             String line;
@@ -82,13 +84,9 @@ public class RentalReminderChecker {
             }
 
 
+        	}catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to check rental reminders.", e);
         	}
-
-        }catch(Exception e){
-
-            e.printStackTrace();
-
-        }
 
     }
 

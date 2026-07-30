@@ -44,10 +44,8 @@ public class AdminVehicleFileService {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
-
+			System.out.println("Error generating vehicle ID.");
 		}
-
 		return lastID + 1;
 	}
 

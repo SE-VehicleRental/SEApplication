@@ -1,6 +1,8 @@
 package software.project;
 
 import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import com.lowagie.text.Document;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -13,6 +15,8 @@ import com.lowagie.text.Image;
 
 public class PDFGenerator {
 
+	private static final Logger LOGGER =
+	        Logger.getLogger(PDFGenerator.class.getName());
     public static void generatePDF(
     		 String customerName,
     	        String customerId,
@@ -65,12 +69,10 @@ public class PDFGenerator {
 
             document.close();
 
-            System.out.println("PDF created successfully.");
+            LOGGER.info("PDF created successfully.");
 
         } catch (Exception e) {
-
-            e.printStackTrace();
-
+            LOGGER.log(Level.SEVERE, "Failed to create PDF.", e);
         }
 
     }

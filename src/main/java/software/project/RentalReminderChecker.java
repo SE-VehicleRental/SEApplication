@@ -19,10 +19,9 @@ public class RentalReminderChecker {
         try {
 
 
-            BufferedReader reader =
-                    new BufferedReader(
-                            new FileReader(rentalsFile)
-                    );
+        	try (BufferedReader reader =
+        	         new BufferedReader(
+        	                 new FileReader(rentalsFile))) {
 
 
             String line;
@@ -83,7 +82,7 @@ public class RentalReminderChecker {
             }
 
 
-            reader.close();
+        	}
 
         }catch(Exception e){
 

@@ -313,7 +313,7 @@ class AdminMenuTest {
                 new adminmenu(fileService, inputService) {
             @Override
             public void showmenu() {
-                // Prevent opening the real menu.
+              
             }
         };
 
@@ -399,4 +399,110 @@ class AdminMenuTest {
 
         verify(menu).displayVehicles("Bus");
     }
+   
+    @Test
+    void adminAddShouldOpenCarAdding() {
+
+        AdminVehicleFileService fileService =
+                mock(AdminVehicleFileService.class);
+
+        AdminInputService inputService =
+                mock(AdminInputService.class);
+
+        when(inputService.readInt())
+                .thenReturn(1)
+                .thenReturn(2);
+
+        adminmenu menu =
+                spy(new adminmenu(fileService, inputService));
+
+        doNothing().when(menu).showmenu();
+
+        doNothing().when(menu).enterVehicleData("Car");
+
+        menu.adminadd();
+
+        verify(menu).enterVehicleData("Car");
+    }
+    
+    
+    @Test
+    void adminAddShouldOpenMotorcycleAdding() {
+
+        AdminVehicleFileService fileService =
+                mock(AdminVehicleFileService.class);
+
+        AdminInputService inputService =
+                mock(AdminInputService.class);
+
+        when(inputService.readInt())
+                .thenReturn(2)
+                .thenReturn(2);
+
+        adminmenu menu =
+                spy(new adminmenu(fileService, inputService));
+
+        doNothing().when(menu).showmenu();
+
+        doNothing().when(menu).enterVehicleData("Motorcycle");
+
+        menu.adminadd();
+
+        verify(menu).enterVehicleData("Motorcycle");
+    }
+    
+    
+    @Test
+    void adminAddShouldOpenTruckAdding() {
+
+        AdminVehicleFileService fileService =
+                mock(AdminVehicleFileService.class);
+
+        AdminInputService inputService =
+                mock(AdminInputService.class);
+
+        when(inputService.readInt())
+                .thenReturn(3)
+                .thenReturn(2);
+
+        adminmenu menu =
+                spy(new adminmenu(fileService, inputService));
+
+        doNothing().when(menu).showmenu();
+
+        doNothing().when(menu).enterVehicleData("Truck");
+
+        menu.adminadd();
+
+        verify(menu).enterVehicleData("Truck");
+    }
+    
+    @Test
+    void adminAddShouldOpenBusAdding() {
+
+        AdminVehicleFileService fileService =
+                mock(AdminVehicleFileService.class);
+
+        AdminInputService inputService =
+                mock(AdminInputService.class);
+
+        when(inputService.readInt())
+                .thenReturn(4)
+                .thenReturn(2);
+
+        adminmenu menu =
+                spy(new adminmenu(fileService, inputService));
+
+        doNothing().when(menu).showmenu();
+
+        doNothing().when(menu).enterVehicleData("Bus");
+
+        menu.adminadd();
+
+        verify(menu).enterVehicleData("Bus");
+    }
+    
+   
+    
+    
 }

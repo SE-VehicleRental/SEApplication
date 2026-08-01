@@ -233,11 +233,13 @@ public class AdminVehicleFileService {
 				pw.println(String.join(",", data));
 			}
 
-			File oldFile = new File(fileName);
-			File newFile = new File("temp.txt");
+			pw.close();
+			br.close();
 
-			oldFile.delete();
-			newFile.renameTo(oldFile);
+			Path original = Path.of(fileName);
+			Path temp = Path.of("temp.txt");
+
+			Files.move(temp, original, StandardCopyOption.REPLACE_EXISTING);
 
 			return edited;
 

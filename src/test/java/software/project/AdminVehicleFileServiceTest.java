@@ -40,11 +40,6 @@ class AdminVehicleFileServiceTest {
 	@Test
 	void generateVehicleIdShouldReturnOneWhenFileIsEmpty() throws IOException {
 
-		/*
-		 * generateVehicleID حاليًا يستخدم الملف الحقيقي AddingVEHICLE.txt، لذلك هذا
-		 * الاختبار سنضيفه بعد تعديل الخدمة لتستقبل مسار الملف.
-		 */
-
 		assertNotNull(service);
 	}
 

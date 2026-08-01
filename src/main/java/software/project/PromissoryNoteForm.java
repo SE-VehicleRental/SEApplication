@@ -47,42 +47,18 @@ public class PromissoryNoteForm extends JFrame {
         noteText.setLineWrap(true);
         noteText.setWrapStyleWord(true);
 
-        noteText.setText(
-
-        		"Date : " + java.time.LocalDate.now() + "\n\n"
-
-        		+ "I, " + customerName
-        		+ ", holder of National ID No. "
-        		+ customerId + ",\n\n"
-
-        		+ "hereby acknowledge that I have rented the following vehicle from "
-        		+ "Nablus Rent Company.\n\n"
-
-        		+ "Vehicle Type : " + vehicleType + "\n\n"
-
-        		+ "Vehicle Company : " + vehicleCompany + "\n\n"
-
-        		+ "Vehicle Model : " + VehicleModel + "\n\n"
-
-        		+ "Customer Phone : " + customerPhone + "\n\n"
-
-        		+ "Rental Start Date : " + rentalStartDate + "\n\n"
-
-        		+ "Rental End Date : " + rentalEndDate + "\n\n"
-
-        		+ "Rental Price Per Day : " + pricePerDay + " ₪\n\n"
-
-        		+ "Total Rental Cost : " + totalCost + "₪ \n\n"
-
-        		+ "Guarantee Amount : 5000 JD\n\n"
-
-        		+ "I undertake to return the vehicle in the same condition in which I received it.\n\n"
-
-        		+ "In case of damage, loss, or failure to return the vehicle,\n"
-
-        		+ "I agree to pay the guarantee amount specified by the company.\n\n"
-
-        		);
+        noteText.setText(buildPromissoryText(
+                customerName,
+                customerId,
+                customerPhone,
+                vehicleType,
+                vehicleCompany,
+                VehicleModel,
+                pricePerDay,
+                rentalStartDate,
+                rentalEndDate,
+                totalCost
+        ));
 
         JScrollPane scrollPane = new JScrollPane(noteText);
         scrollPane.setBounds(50, 130, 650, 480);
@@ -143,4 +119,51 @@ public class PromissoryNoteForm extends JFrame {
         setVisible(true);
     }
 
+	
+	public static String buildPromissoryText(
+	        String customerName,
+	        String customerId,
+	        String customerPhone,
+	        String vehicleType,
+	        String vehicleCompany,
+	        String vehicleModel,
+	        String pricePerDay,
+	        String rentalStartDate,
+	        String rentalEndDate,
+	        String totalCost) {
+
+	    return "Date : " + java.time.LocalDate.now() + "\n\n"
+
+	            + "I, " + customerName
+	            + ", holder of National ID No. "
+	            + customerId + ",\n\n"
+
+	            + "hereby acknowledge that I have rented the following vehicle from "
+	            + "Nablus Rent Company.\n\n"
+
+	            + "Vehicle Type : " + vehicleType + "\n\n"
+
+	            + "Vehicle Company : " + vehicleCompany + "\n\n"
+
+	            + "Vehicle Model : " + vehicleModel + "\n\n"
+
+	            + "Customer Phone : " + customerPhone + "\n\n"
+
+	            + "Rental Start Date : " + rentalStartDate + "\n\n"
+
+	            + "Rental End Date : " + rentalEndDate + "\n\n"
+
+	            + "Rental Price Per Day : " + pricePerDay + " ₪\n\n"
+
+	            + "Total Rental Cost : " + totalCost + " ₪\n\n"
+
+	            + "Guarantee Amount : 5000 JD\n\n"
+
+	            + "I undertake to return the vehicle in the same condition in which I received it.\n\n"
+
+	            + "In case of damage, loss, or failure to return the vehicle,\n"
+
+	            + "I agree to pay the guarantee amount specified by the company.\n\n";
+	}
+	
 }

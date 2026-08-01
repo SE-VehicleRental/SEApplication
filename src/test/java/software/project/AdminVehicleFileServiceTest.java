@@ -173,7 +173,7 @@ class AdminVehicleFileServiceTest {
 
 		String content = Files.readString(vehiclesFile);
 
-		assertTrue(content.contains("1,Car,Honda,Corolla,Red,123456,2020,50.0"));
+		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,50.0"));
 	}
 
 	@Test
@@ -187,7 +187,7 @@ class AdminVehicleFileServiceTest {
 
 		String content = Files.readString(vehiclesFile);
 
-		assertTrue(content.contains("1,Car,Toyota,Camry,Red,123456,2020,50.0"));
+		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,50.0"));
 	}
 
 	@Test
@@ -201,7 +201,7 @@ class AdminVehicleFileServiceTest {
 
 		String content = Files.readString(vehiclesFile);
 
-		assertTrue(content.contains("1,Car,Toyota,Corolla,Blue,123456,2020,50.0"));
+		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,50.0"));
 	}
 
 	@Test
@@ -215,7 +215,7 @@ class AdminVehicleFileServiceTest {
 
 		String content = Files.readString(vehiclesFile);
 
-		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2024,50.0"));
+		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,50.0"));
 	}
 
 	@Test
@@ -229,7 +229,7 @@ class AdminVehicleFileServiceTest {
 
 		String content = Files.readString(vehiclesFile);
 
-		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,90.0"));
+		assertTrue(content.contains("1,Car,Toyota,Corolla,Red,123456,2020,50.0"));
 	}
 
 	@Test

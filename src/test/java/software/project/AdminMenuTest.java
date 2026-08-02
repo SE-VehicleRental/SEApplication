@@ -122,7 +122,7 @@ class AdminMenuTest {
                 new adminmenu(fileService, inputService) {
             @Override
             public void showmenu() {
-                // Prevent real menu from opening.
+             
             }
         };
 
@@ -268,7 +268,7 @@ class AdminMenuTest {
                 new adminmenu(fileService, inputService) {
             @Override
             public void showmenu() {
-                // Prevent opening the real menu.
+                
             }
         };
 
@@ -356,7 +356,7 @@ class AdminMenuTest {
                 new adminmenu(fileService, inputService) {
             @Override
             public void showmenu() {
-                // Prevent the real menu from opening.
+            
             }
         };
 
